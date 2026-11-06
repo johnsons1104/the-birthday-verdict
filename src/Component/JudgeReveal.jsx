@@ -1,13 +1,75 @@
-import React, { useState } from "react";
+
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Sparkles, Heart, ArrowRight, Crown } from "lucide-react";
+import {
+  Gavel,
+  Sparkles,
+  Heart,
+  ArrowRight,
+  Crown,
+} from "lucide-react";
 import "./JudgeReveal.css";
 
-const JudgeReveal = ({ onContinue }) => {
+const JudgeReveal = ({ onContinue, theriAudioRef }) => {
   const [vijaySelected, setVijaySelected] = useState(false);
-  const [rajiniPosition, setRajiniPosition] = useState({ x: 0, y: 0 });
+
+  const [rajiniPosition, setRajiniPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
   const [attempts, setAttempts] = useState(0);
 
+  const thalapathyAudioRef = useRef(null);
+
+  // Stop Theri BGM
+  const stopTheriAudio = () => {
+    if (theriAudioRef?.current) {
+      theriAudioRef.current.pause();
+      theriAudioRef.current.currentTime = 0;
+    }
+  };
+
+  // Stop Thalapathy BGM
+  const stopThalapathyAudio = () => {
+    if (thalapathyAudioRef.current) {
+      thalapathyAudioRef.current.pause();
+      thalapathyAudioRef.current.currentTime = 0;
+    }
+  };
+
+  // Vijay select pannumbothu Theri BGM stop
+  // Thalapathy BGM play
+  const handleVijaySelect = async () => {
+    stopTheriAudio();
+
+    setVijaySelected(true);
+
+    if (thalapathyAudioRef.current) {
+      thalapathyAudioRef.current.currentTime = 0;
+      thalapathyAudioRef.current.volume = 0.8;
+
+      try {
+        await thalapathyAudioRef.current.play();
+      } catch (error) {
+        console.log(
+          "Thalapathy BGM playback failed:",
+          error
+        );
+      }
+    }
+  };
+
+  // Stop Thalapathy BGM and open next case
+  const handleContinue = () => {
+    stopThalapathyAudio();
+
+    if (typeof onContinue === "function") {
+      onContinue();
+    }
+  };
+
+  // Rajini button escape animation
   const moveRajiniButton = () => {
     setRajiniPosition({
       x: Math.random() * 220 - 110,
@@ -25,8 +87,17 @@ const JudgeReveal = ({ onContinue }) => {
       exit={{ opacity: 0, scale: 0.85 }}
       transition={{ duration: 0.7, type: "spring" }}
     >
+      {/* Thalapathy BGM */}
+      <audio
+        ref={thalapathyAudioRef}
+        src="/thalaver.mp3"
+        preload="auto"
+        loop
+      />
+
       <AnimatePresence mode="wait">
         {!vijaySelected ? (
+          /* JUDGE QUESTION SCREEN */
           <motion.div
             key="judge-question"
             className="judge-question-screen"
@@ -36,27 +107,54 @@ const JudgeReveal = ({ onContinue }) => {
           >
             <div className="judge-tag">
               <Gavel size={17} />
-              <span>RAJINI FAN vs VIJAY FAN</span>
+
+              <span>
+                🔥 RAJINI FAN vs THALAPATHY FAN 🔥
+              </span>
+
               <Sparkles size={17} />
             </div>
 
-            <div className="judge-main-icon">⚖️</div>
+            <div className="judge-main-icon">
+              ⚖️
+            </div>
 
             <h1>
-              Indha Case-la
+              THE GREAT FAN WAR!
               <br />
-              <span>Judge Naan Dhaan!</span> 😎
+              <span>
+                Indha Case-la Judge Naan Dhaan!
+              </span>{" "}
+              😎
             </h1>
 
             <p className="judge-description">
-              Unakku Rajini pudikkum...
+              Attention, Madam Advocate! 👩🏻‍⚖️💗
               <br />
-              Enakku Thalapathy Vijay pudikkum! 🔥
+
+              Innaiku court-la oru mass-aana fan war!
               <br />
+              <br />
+
+              Enakku Superstar Rajinikanth pudikkum...
+              <br />
+
+              Unakku Thalapathy Vijay pudikkum! 🔥
+              <br />
+              <br />
+
               <strong>
-                Ippo sollu madam advocate...
+                Rendu perum mass...
                 <br />
-                Unakku yaaru pudikkum?
+                Rendu perum legends...
+                <br />
+                Aana indha court-la winner yaaru? 😂
+                <br />
+                <br />
+
+                Ippo sollu, madam advocate...
+                <br />
+                Un heart-oda favourite hero yaaru? 👀
               </strong>
             </p>
 
@@ -76,17 +174,17 @@ const JudgeReveal = ({ onContinue }) => {
                 onPointerEnter={moveRajiniButton}
                 onClick={moveRajiniButton}
               >
-                ❤️ Rajini
+                ❤️ SUPERSTAR RAJINI
               </motion.button>
 
               <motion.button
                 type="button"
                 className="vijay-choice-btn"
-                onClick={() => setVijaySelected(true)}
+                onClick={handleVijaySelect}
                 whileHover={{ scale: 1.12 }}
                 whileTap={{ scale: 0.9 }}
               >
-                🔥 Thalapathy Vijay
+                🔥 THALAPATHY VIJAY
               </motion.button>
             </div>
 
@@ -97,7 +195,7 @@ const JudgeReveal = ({ onContinue }) => {
               animate={{ opacity: 1, y: 0 }}
             >
               {attempts === 0
-                ? "Rajini button-a click panni paaru! 😏"
+                ? "Rajini button-a click panni paaru, madam! 😏"
                 : attempts < 3
                   ? "Aiyayo! Rajini escape aagittaru! 😂"
                   : attempts < 6
@@ -107,21 +205,49 @@ const JudgeReveal = ({ onContinue }) => {
 
             <div className="judge-bottom-note">
               <Heart size={15} fill="#ff4d88" />
-              Choose wisely, my dear advocate!
+
+              Choose wisely, my dear advocate...
+
               <Heart size={15} fill="#ff4d88" />
             </div>
+
+            <p className="judge-final-tease">
+              ⚖️ Judge is watching you!
+              <br />
+
+              <span>
+                Thalapathy-ku vote pannina special
+                birthday bonus irukku! 🎂💗
+              </span>
+            </p>
           </motion.div>
         ) : (
+          /* VIJAY FINAL VERDICT SCREEN */
           <motion.div
             key="vijay-verdict"
             className="vijay-verdict-screen"
-            initial={{ opacity: 0, scale: 0.5, rotateY: 90 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 0.8, type: "spring" }}
+            initial={{
+              opacity: 0,
+              scale: 0.5,
+              rotateY: 90,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotateY: 0,
+            }}
+            transition={{
+              duration: 0.8,
+              type: "spring",
+            }}
           >
             <div className="vijay-verdict-tag">
               <Crown size={18} />
-              <span>FINAL VERDICT</span>
+
+              <span>
+                OFFICIAL FAN GIRL VERDICT
+              </span>
+
               <Sparkles size={18} />
             </div>
 
@@ -134,44 +260,94 @@ const JudgeReveal = ({ onContinue }) => {
 
               <div className="vijay-image-overlay">
                 <Crown size={25} />
-                <span>THE ONE & ONLY THALAPATHY</span>
+
+                <span>
+                  THE ONE &amp; ONLY THALAPATHY 🔥
+                </span>
               </div>
             </div>
 
             <h1>
               Endraikkum
               <br />
-              <span>Oru Thalapathy! 🔥</span>
+
+              <span>
+                Oru Thalapathy! 😎🔥
+              </span>
             </h1>
 
             <p className="vijay-verdict-message">
               Rajini sir-ku respect...
               <br />
-              Aana en heart-la
-              <strong> Thalapathy Vijay dhaan! ❤️‍🔥</strong>
+
+              Avar style-ku thani level! 😎
               <br />
               <br />
+
+              <strong>
+                Aana Bettina madam-oda heart-la...
+                <br />
+
+                Thalapathy Vijay dhaan ippo permanent! ❤️‍🔥
+              </strong>
+
+              <br />
+              <br />
+
+              Innaiku varaikkum Rajini fan girl-ah irundha...
+              <br />
+
+              <strong>
+                Ippo officially Thalapathy fan girl aagitta! 😂🔥
+              </strong>
+
+              <br />
+              <br />
+
+              Enna advocate madam...
+              <br />
+
+              <strong>
+                Idhu fan change-ah?
+                Illa love effect-ah? 🤭❤️
+              </strong>
+
+              <br />
+              <br />
+
+              <strong>
+                FAN GIRL PROMOTION APPROVED! 💥
+              </strong>
+
+              <br />
+
+              Rajini Fan Girl → Thalapathy Fan Girl
+
+              <br />
+              <br />
+
               <strong>
                 Case mudinjiduchu!
                 <br />
-                Thalapathy fans win! 😂⚖️
+
+                Appeal panna chance ZERO! 😂⚖️
               </strong>
             </p>
 
             <div className="vijay-love-footer">
-              <Sparkles size={17} />
-              THALAPATHY FOREVER
-              <Sparkles size={17} />
+
+              😍🔥 FINALLY, MY GIRL. MY THALAPATHY FAN GIRL. 🫶🏻❤️
             </div>
 
             <motion.button
               type="button"
               className="judge-continue-btn"
-              onClick={onContinue}
+              onClick={handleContinue}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.94 }}
             >
               Open Next Case File
+
               <ArrowRight size={18} />
             </motion.button>
           </motion.div>

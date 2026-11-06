@@ -1,3 +1,16 @@
+/* =====================================================
+   BIRTHDAY SURPRISE — FLOW
+
+   1. question  → "Do you like me?"  (NO button runs away)
+   2. success   → funny court text + Love Letter popup
+   3. password  → enter CASE143
+   4. decrypt   → 5 second loading screen
+   5. reveal    → photo + Theri BGM starts here, then scrolling:
+                  gallery → birthday card → letter → music →
+                  courtroom game → Rajini vs Vijay →
+                  Secret Case File → final message
+===================================================== */
+
 import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -22,6 +35,9 @@ import "./App.css";
 import Courtroom from "./Component/Courtroom";
 import JudgeReveal from "./Component/JudgeReveal";
 import SecretCaseFile from "./Component/SecretCaseFile";
+import LoveLetterModal from "./Component/Lovelettermodal";
+
+/* ---------------- SETTINGS ---------------- */
 
 const SECRET_PASSWORD = "CASE143";
 const DECRYPT_DURATION = 5000;
@@ -50,14 +66,14 @@ const photoCards = [
 ];
 
 const noMessages = [
-  "Objection! You cannot reject this case 😏",
-  "Your Honour, please reconsider! 💗",
-  "The court refuses this decision 😂",
-  "One more chance, my dear advocate!",
-  "This case is getting interesting! ⚖️",
+  "Objection! Your Honour, ivanga poi solraanga! 😂",
+  "Un heart YES solludhu, nee mattum NO solriya? 😏❤️",
+  "NO sollura courage irukku... YES sollura courage illaya? 🤣",
+  "Love court-ku repeated visit panra madam! ⚖️",
+  "NO button-ku ivlo effort... YES sollirundha 2 seconds-la mudinjirukkum! 😂❤️",
 ];
 
-// Generated once, so positions don't change on every re-render
+/* Generated once, so positions don't change on every re-render */
 const stars = Array.from({ length: 35 }, () => ({
   left: `${Math.random() * 100}%`,
   top: `${Math.random() * 100}%`,
@@ -79,19 +95,11 @@ const celebrate = () => {
     origin: { y: 0.6 },
     colors: CONFETTI_COLORS,
   });
-
-  confetti({
-    particleCount: 80,
-    spread: 120,
-    origin: { x: 0.2, y: 0.5 },
-  });
-
-  confetti({
-    particleCount: 80,
-    spread: 120,
-    origin: { x: 0.8, y: 0.5 },
-  });
+  confetti({ particleCount: 80, spread: 120, origin: { x: 0.2, y: 0.5 } });
+  confetti({ particleCount: 80, spread: 120, origin: { x: 0.8, y: 0.5 } });
 };
+
+/* ---------------- SMALL COMPONENTS ---------------- */
 
 const SecretSection = ({ children }) => (
   <motion.section
@@ -104,27 +112,118 @@ const SecretSection = ({ children }) => (
   </motion.section>
 );
 
+/* Falling stars + floating hearts behind everything */
+const Backdrop = () => (
+  <>
+    <div className="stars-container">
+      {stars.map((star, index) => (
+        <motion.span
+          key={index}
+          className="background-star"
+          style={{ left: star.left, top: star.top }}
+          animate={{ opacity: [0.2, 1, 0.2], scale: [0.7, 1.3, 0.7] }}
+          transition={{
+            duration: star.duration,
+            repeat: Infinity,
+            delay: star.delay,
+          }}
+        >
+          ✦
+        </motion.span>
+      ))}
+    </div>
+
+    <div className="floating-hearts">
+      {hearts.map((heart, index) => (
+        <motion.span
+          key={index}
+          className="floating-heart"
+          initial={{ y: "100vh", opacity: 0, x: heart.x }}
+          animate={{
+            y: "-10vh",
+            opacity: [0, 0.8, 0],
+            rotate: [0, 20, -20, 0],
+          }}
+          transition={{
+            duration: heart.duration,
+            repeat: Infinity,
+            delay: heart.delay,
+          }}
+        >
+          {heart.icon}
+        </motion.span>
+      ))}
+    </div>
+  </>
+);
+
+/* Big photo popup (opens when a gallery photo is tapped) */
+const PhotoLightbox = ({ photo, onClose }) => (
+  <motion.div
+    className="photo-lightbox"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    onClick={onClose}
+  >
+    <motion.div
+      className="lightbox-card"
+      initial={{ scale: 0.5, rotateY: 90 }}
+      animate={{ scale: 1, rotateY: 0 }}
+      exit={{ scale: 0.5, rotateY: -90 }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="lightbox-close"
+        onClick={onClose}
+        aria-label="Close photo"
+      >
+        ✕
+      </button>
+
+      <img src={photo.image} alt={photo.title} />
+      <h2>{photo.title}</h2>
+      <p>{photo.description}</p>
+      <div className="lightbox-heart">💗</div>
+    </motion.div>
+  </motion.div>
+);
+
+/* ===================================================== */
+
 function App() {
   const [screen, setScreen] = useState("question");
-  const [noCount, setNoCount] = useState(0);
+
+  // step 1
+  const [noAttempts, setNoAttempts] = useState(0);
+  const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
+
+  // step 2
+  const [showLetter, setShowLetter] = useState(false);
+
+  // step 3 + 4
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [progress, setProgress] = useState(0);
-  const [showLetter, setShowLetter] = useState(false);
+
+  // step 5
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [courtOpen, setCourtOpen] = useState(false);
   const [showFinalSections, setShowFinalSections] = useState(false);
 
-  const audioRef = useRef(null);
-  const theriAudioRef = useRef(null);
+  const audioRef = useRef(null); // birthday song
+  const theriAudioRef = useRef(null); // Theri BGM
+
+  /* ---------- effects ---------- */
 
   // Scroll to top whenever the screen changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [screen]);
 
-  // Scroll to the secret case file once it appears
+  // Scroll to the Secret Case File once it opens
   useEffect(() => {
     if (!showFinalSections) return;
 
@@ -137,7 +236,7 @@ function App() {
     return () => clearTimeout(timer);
   }, [showFinalSections]);
 
-  // Decrypt progress -> reveal screen (+ Theri BGM starts here)
+  // Decrypt progress → reveal screen (+ Theri BGM starts here)
   useEffect(() => {
     if (screen !== "decrypt") return;
 
@@ -146,29 +245,18 @@ function App() {
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - start;
-      const currentProgress = Math.min(
-        (elapsed / DECRYPT_DURATION) * 100,
-        100
-      );
-
-      setProgress(currentProgress);
+      setProgress(Math.min((elapsed / DECRYPT_DURATION) * 100, 100));
 
       if (elapsed >= DECRYPT_DURATION) {
         clearInterval(interval);
-        setProgress(100);
-
-        // Show image reveal screen
         setScreen("reveal");
 
-        // Theri BGM starts exactly when the image reveal starts
-        const theriAudio = theriAudioRef.current;
-
-        if (theriAudio) {
-          theriAudio.muted = false;
-          theriAudio.currentTime = 0;
-          theriAudio.volume = 1;
-
-          theriAudio.play().catch((error) => {
+        const theri = theriAudioRef.current;
+        if (theri) {
+          theri.muted = false;
+          theri.currentTime = 0;
+          theri.volume = 1;
+          theri.play().catch((error) => {
             console.error("Theri BGM playback failed:", error);
           });
         }
@@ -179,6 +267,19 @@ function App() {
 
     return () => clearInterval(interval);
   }, [screen]);
+
+  /* ---------- step 1: question ---------- */
+
+  const handleNoClick = () => {
+    // keep the button inside the screen, even on small phones
+    const maxX = Math.max(40, Math.min(120, window.innerWidth / 2 - 90));
+
+    setNoAttempts((prev) => prev + 1);
+    setNoPosition({
+      x: (Math.random() * 2 - 1) * maxX,
+      y: (Math.random() * 2 - 1) * 55,
+    });
+  };
 
   const handleYes = () => {
     setScreen("success");
@@ -191,24 +292,24 @@ function App() {
     });
   };
 
-  // Android / iPhone block audio that starts without a tap.
-  // This runs inside the button tap, so the audio gets "unlocked"
-  // and can be played automatically later when the reveal starts.
+  /* ---------- step 3: password ---------- */
+
+  // Phones block audio that starts without a tap. This runs inside the
+  // Submit tap, so the audio is "unlocked" and can start by itself later.
   const unlockAudio = () => {
-    const theriAudio = theriAudioRef.current;
-    if (!theriAudio) return;
+    const theri = theriAudioRef.current;
+    if (!theri) return;
 
-    theriAudio.muted = true;
-
-    theriAudio
+    theri.muted = true;
+    theri
       .play()
       .then(() => {
-        theriAudio.pause();
-        theriAudio.currentTime = 0;
-        theriAudio.muted = false;
+        theri.pause();
+        theri.currentTime = 0;
+        theri.muted = false;
       })
       .catch(() => {
-        theriAudio.muted = false;
+        theri.muted = false;
       });
   };
 
@@ -218,30 +319,28 @@ function App() {
     if (password.trim().toUpperCase() === SECRET_PASSWORD) {
       setPasswordError("");
       setPassword("");
-
-      unlockAudio();
       setShowFinalSections(false);
+      unlockAudio();
       setScreen("decrypt");
     } else {
-      setPasswordError(
-        "Objection! Incorrect password. Try again, Advocate 💗"
-      );
+      setPasswordError("Objection! Incorrect password. Try again, Advocate 💗");
       setPassword("");
     }
   };
 
+  /* ---------- step 5: reveal ---------- */
+
   const toggleMusic = async () => {
-    if (!audioRef.current) return;
+    const song = audioRef.current;
+    if (!song) return;
 
     try {
       if (isPlaying) {
-        audioRef.current.pause();
+        song.pause();
         setIsPlaying(false);
       } else {
-        // Pause Theri BGM when birthday song starts
-        if (theriAudioRef.current) theriAudioRef.current.pause();
-
-        await audioRef.current.play();
+        theriAudioRef.current?.pause(); // birthday song replaces Theri BGM
+        await song.play();
         setIsPlaying(true);
       }
     } catch (error) {
@@ -249,93 +348,41 @@ function App() {
     }
   };
 
-  const handleJudgeContinue = () => {
-    setShowFinalSections(true);
-  };
-
   const resetSurprise = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-
-    if (theriAudioRef.current) {
-      theriAudioRef.current.pause();
-      theriAudioRef.current.currentTime = 0;
-    }
+    [audioRef.current, theriAudioRef.current].forEach((audio) => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
 
     setScreen("question");
-    setNoCount(0);
+    setNoAttempts(0);
+    setNoPosition({ x: 0, y: 0 });
+    setShowLetter(false);
     setPassword("");
     setPasswordError("");
     setProgress(0);
     setIsPlaying(false);
-    setShowLetter(false);
     setSelectedPhoto(null);
     setCourtOpen(false);
     setShowFinalSections(false);
   };
 
+  /* ---------- render ---------- */
+
   return (
     <div className="love-page">
-      {/* AUDIO ALWAYS MOUNTED (outside screens) */}
+      {/* Audio is always mounted, so it can play on any screen */}
       <audio ref={theriAudioRef} src="/theri.mp3" preload="auto" loop />
       <audio ref={audioRef} src="/birthday-song.mp3" preload="auto" loop />
 
       <div className="background-glow glow-one" />
       <div className="background-glow glow-two" />
-
-      {/* BACKGROUND STARS */}
-      <div className="stars-container">
-        {stars.map((star, index) => (
-          <motion.span
-            key={index}
-            className="background-star"
-            style={{ left: star.left, top: star.top }}
-            animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: [0.7, 1.3, 0.7],
-            }}
-            transition={{
-              duration: star.duration,
-              repeat: Infinity,
-              delay: star.delay,
-            }}
-          >
-            ✦
-          </motion.span>
-        ))}
-      </div>
-
-      {/* FLOATING HEARTS */}
-      <div className="floating-hearts">
-        {hearts.map((heart, index) => (
-          <motion.span
-            key={index}
-            className="floating-heart"
-            initial={{
-              y: "100vh",
-              opacity: 0,
-              x: heart.x,
-            }}
-            animate={{
-              y: "-10vh",
-              opacity: [0, 0.8, 0],
-              rotate: [0, 20, -20, 0],
-            }}
-            transition={{
-              duration: heart.duration,
-              repeat: Infinity,
-              delay: heart.delay,
-            }}
-          >
-            {heart.icon}
-          </motion.span>
-        ))}
-      </div>
+      <Backdrop />
 
       <AnimatePresence mode="wait">
-        {/* QUESTION SCREEN */}
+        {/* ============ STEP 1 — QUESTION ============ */}
         {screen === "question" && (
           <motion.div
             key="question"
@@ -347,10 +394,7 @@ function App() {
           >
             <motion.div
               className="main-heart"
-              animate={{
-                scale: [1, 1.15, 1],
-                rotate: [0, 5, -5, 0],
-              }}
+              animate={{ scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               💖
@@ -372,10 +416,7 @@ function App() {
               This case is strictly confidential! 💌
             </p>
 
-            <motion.div
-              className="question-card"
-              whileHover={{ scale: 1.02 }}
-            >
+            <div className="question-card">
               <Sparkles className="card-sparkle" />
 
               <div className="emoji-row">⚖️ 💗 ⚖️</div>
@@ -389,44 +430,49 @@ function App() {
                 <br />
                 Choose wisely, my dear advocate!
               </p>
-            </motion.div>
+            </div>
 
             <div className="button-area">
+              {/* YES grows every time NO is clicked */}
               <motion.button
                 type="button"
                 className="yes-button"
-                onClick={handleYes}
+                animate={{ scale: 1 + Math.min(noAttempts * 0.08, 0.4) }}
                 whileHover={{ scale: 1.15 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={handleYes}
               >
                 YES 💖
               </motion.button>
 
+              {/* NO runs away and shrinks */}
               <motion.button
                 type="button"
                 className="no-button"
-                onClick={() => setNoCount((prev) => prev + 1)}
-                animate={
-                  noCount > 0
-                    ? {
-                        x: [0, -5, 5, -4, 4, 0],
-                        rotate: [0, -4, 4, -3, 3, 0],
-                      }
-                    : { x: 0, rotate: 0 }
-                }
-                transition={{ duration: 0.45 }}
-                whileHover={{ scale: 0.95 }}
-                whileTap={{ scale: 0.85, rotate: -8 }}
+                animate={{
+                  x: noPosition.x,
+                  y: noPosition.y,
+                  scale: Math.max(1 - noAttempts * 0.05, 0.65),
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                whileTap={{ scale: 0.85 }}
+                onClick={handleNoClick}
               >
                 NO 🙈
               </motion.button>
             </div>
 
-            <p className="no-message">
-              {noCount > 0
-                ? noMessages[(noCount - 1) % noMessages.length]
-                : "Your answer will be recorded by the court 💕"}
-            </p>
+            <motion.p
+              key={noAttempts}
+              className="no-message"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {noAttempts === 0
+                ? "Your answer will be recorded by the court 💕"
+                : noMessages[(noAttempts - 1) % noMessages.length]}
+            </motion.p>
 
             <div className="bottom-message">
               <Heart size={15} fill="#ff4d88" />
@@ -436,7 +482,7 @@ function App() {
           </motion.div>
         )}
 
-        {/* SUCCESS SCREEN */}
+        {/* ============ STEP 2 — SUCCESS ============ */}
         {screen === "success" && (
           <motion.div
             key="success"
@@ -476,9 +522,8 @@ function App() {
                 <p>Indha Heart Theft Case-la...</p>
 
                 <h3>
-                  Heart Theft Section keezha case register panni,
-                  <br />
-                  sattappadi nadavadikkai edukka vendum! ⚖️🚨
+                  Heart Theft Section keezha case register panni, sattappadi
+                  nadavadikkai edukka vendum! ⚖️🚨
                 </h3>
 
                 <p>
@@ -511,8 +556,8 @@ function App() {
                   Indha innocent accused-ku eppo jamin vaangi kudukka
                   poreenga? 😂
                   <br />
-                  Illa neengalum indha love case-la co-accused
-                  aagiteengala? 💘
+                  Illa neengalum indha love case-la co-accused aagiteengala?
+                  💘
                 </p>
               </div>
 
@@ -536,95 +581,10 @@ function App() {
 
             <AnimatePresence>
               {showLetter && (
-                <motion.div
-                  className="love-letter-modal-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setShowLetter(false)}
-                >
-                  <motion.div
-                    className="secret-letter-modal"
-                    initial={{ opacity: 0, scale: 0.7, y: 50 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.7, y: 50 }}
-                    transition={{ duration: 0.4 }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <button
-                      type="button"
-                      className="love-letter-close"
-                      onClick={() => setShowLetter(false)}
-                      aria-label="Close letter"
-                    >
-                      ✕
-                    </button>
-
-                    <div className="letter-emoji">💌</div>
-
-                    <div className="secret-tag">
-                      <Scale size={16} />
-                      CONFIDENTIAL LOVE LETTER
-                    </div>
-
-                    <h2>Dear My Favorite Advocate, ⚖️💗</h2>
-
-                    <p>
-                      If love were a courtroom, you would be the most beautiful
-                      case my heart has ever handled.
-                    </p>
-
-                    <p>
-                      As a law student, you may know how to argue a case,
-                      interpret the law, and fight for justice... but I wonder
-                      if you know how effortlessly you won a permanent place in
-                      my heart. 🥹
-                    </p>
-
-                    <p>
-                      I hereby submit my heart as Exhibit A, my endless care as
-                      Exhibit B, and every little memory of us as Exhibit C.
-                    </p>
-
-                    <p>
-                      There is no objection to your smile, no appeal against
-                      your beautiful presence, and absolutely no intention of
-                      withdrawing the feelings I have for you. 💕
-                    </p>
-
-                    <p>
-                      You don't need to prove your innocence, because the only
-                      charge against you is
-                      <strong> stealing my heart without permission. </strong>
-                    </p>
-
-                    <h3>⚖️ THE FINAL VERDICT ⚖️</h3>
-
-                    <p>
-                      After carefully examining every memory, every smile, and
-                      every little moment... this court finds you
-                      <strong>
-                        {" "}
-                        GUILTY of being someone truly special to me.{" "}
-                      </strong>
-                    </p>
-
-                    <p>
-                      The sentence? A lifetime of love, care, smiles, beautiful
-                      memories, and a special place in my heart. ❤️
-                    </p>
-
-                    <h3>Case No. 143 — The Case of My Heart 💗</h3>
-
-                    <div className="letter-signature">
-                      With love and endless affection,
-                      <br />
-                      Your Secret Admirer,
-                      <br />
-                      The One Who Always Chooses You. 💌
-                    </div>
-                  </motion.div>
-                </motion.div>
+                <LoveLetterModal
+                  key="love-letter"
+                  onClose={() => setShowLetter(false)}
+                />
               )}
             </AnimatePresence>
 
@@ -642,7 +602,7 @@ function App() {
           </motion.div>
         )}
 
-        {/* PASSWORD SCREEN */}
+        {/* ============ STEP 3 — PASSWORD ============ */}
         {screen === "password" && (
           <SecretSection key="password">
             <motion.div
@@ -680,10 +640,8 @@ function App() {
                   stolen without a single word. 💗
                   <br />
                   This confidential case is protected under the Special Love
-                  &amp; Affection Act.
-                  <br />
-                  Access is strictly restricted to the authorized Advocate
-                  Madam only.
+                  &amp; Affection Act. Access is strictly restricted to the
+                  authorized Advocate Madam only.
                 </p>
               </div>
 
@@ -781,7 +739,7 @@ function App() {
           </SecretSection>
         )}
 
-        {/* DECRYPT SCREEN */}
+        {/* ============ STEP 4 — DECRYPT ============ */}
         {screen === "decrypt" && (
           <SecretSection key="decrypt">
             <motion.div
@@ -848,7 +806,7 @@ function App() {
           </SecretSection>
         )}
 
-        {/* REVEAL SCREEN */}
+        {/* ============ STEP 5 — REVEAL ============ */}
         {screen === "reveal" && (
           <SecretSection key="reveal">
             <motion.div
@@ -876,12 +834,15 @@ function App() {
               </h2>
 
               <p className="secret-love-message">
-                The court has officially declared you as someone truly special.
+                On this very special day, the Court of Love celebrates <br />the birthday of its
+                most precious person — Bettina! 🎂
                 <br />
-                Here is the most important evidence in this case... 💖
+                Guilty of stealing my heart and making every moment beautiful. 🥹💖
+                <br />Today, the most precious evidence is not found in any law book… <br />it is found
+                in my heart. 🥹❤️💖
               </p>
 
-              {/* SPECIAL PHOTO */}
+              {/* 5.1 — Special photo */}
               <motion.div
                 className="special-photo-card"
                 initial={{ opacity: 0, y: 100 }}
@@ -912,16 +873,16 @@ function App() {
                 <h3>My Favorite Memory 💗</h3>
 
                 <p>
-                  A special person.
+                  A beautiful soul. ❤️
                   <br />
-                  A beautiful memory.
+                  A precious memory. 🥹
                   <br />
-                  An unforgettable bond.
+                  A bond my heart will cherish forever. 💖
                 </p>
               </motion.div>
 
-              {/* PHOTO GALLERY */}
-              <div className="photo-gallery-section" id="photo-gallery">
+              {/* 5.2 — Photo gallery */}
+              <div className="photo-gallery-section">
                 <div className="gallery-heading">
                   <Sparkles size={17} />
                   <h3>MORE SECRET EVIDENCE</h3>
@@ -978,7 +939,8 @@ function App() {
                 </div>
               </div>
 
-              {/* BIRTHDAY MESSAGE */}
+              {/* 5.3 — Birthday message */}
+
               <motion.div
                 className="birthday-message-card"
                 initial={{ opacity: 0, y: 60 }}
@@ -999,27 +961,43 @@ function App() {
                 </h2>
 
                 <p>
-                  May your life be filled with happiness, success, beautiful
-                  memories, and endless smiles.
+                  Today, the world celebrates your birthday, but my heart
+                  celebrates the beautiful blessing that is you. ❤️
                 </p>
 
                 <p>
-                  May every dream you carry in your heart come true. You
-                  deserve all the wonderful things this world has to offer.
+                  May your life be filled with endless happiness, remarkable
+                  success, beautiful memories, and countless reasons to smile.
+                </p>
+
+                <p>
+                  May every dream in your heart come true, every step lead
+                  you toward success, and God's blessings always guide your
+                  beautiful journey. ✝️💗
                 </p>
 
                 <div className="birthday-wishes">
-                  <span>💗 Happiness</span>
-                  <span>✨ Success</span>
-                  <span>🎂 Love</span>
+                  <span>💗 Endless Happiness</span>
+                  <span>✨ Beautiful Success</span>
+                  <span>🎂 Forever Love</span>
                 </div>
 
                 <div className="birthday-footer">
-                  Wishing you a lifetime of beautiful moments 💖
+                  Wishing you a lifetime of happiness, love, and unforgettable
+                  moments, my dear Bettina. 🥹❤️
+
+                  <br />
+
+                  <strong>
+                    Forever my favorite person, my sweetest blessing,
+                    and my favorite advocate. ⚖️🫶🏻
+                  </strong>
                 </div>
               </motion.div>
 
-              {/* EMOTIONAL LETTER */}
+
+              {/* 5.4 — Emotional letter */}
+
               <motion.div
                 className="emotional-letter-card"
                 initial={{ opacity: 0, y: 60 }}
@@ -1038,39 +1016,51 @@ function App() {
                 <h2>To Someone Truly Special...</h2>
 
                 <p>
-                  Some people enter our lives and quietly become important in
-                  ways we never expected.
+                  Some people enter our lives and quietly become important in ways
+                  we never expected. And nee appadi en life-la vandha oru
+                  special person. ❤️
                 </p>
 
                 <p>
-                  You are one of those people. Your presence, your smile, and
-                  the little moments we share mean more than I can explain.
+                  Un presence, un smile, and namma share panra chinna chinna
+                  moments ellame enakku romba special. Sometimes, words-la
+                  explain panna mudiyadha alavukku nee enakku important.
                 </p>
 
                 <p>
                   I may not always find the right words to express what I feel,
-                  but I hope this little surprise reminds you that you are
-                  appreciated.
+                  but I hope this little surprise reminds you of how much you
+                  are appreciated. Un smile paatha en day eh konjam better
+                  aagidum. 🫶🏻
                 </p>
 
                 <p>
-                  On your birthday, I wish you peace in your heart, courage in
-                  your dreams, and happiness in every little thing you do.
+                  On your birthday, I wish you peace in your heart, courage
+                  in your dreams, and happiness in every little thing you do.
+                  Un dreams ellame nalla achieve pannanum, life-la nee nenacha
+                  ellame beautiful-ah nadakkanum.
+                </p>
+
+                <p>
+                  May God always guide you, protect you, and bless you with
+                  endless happiness. ✨
                 </p>
 
                 <p className="emotional-highlight">
                   No matter where life takes you, I hope you always remember
-                  how special you are. 💗
+                  how special you are. Nee eppovume happy-ah irukkanum,
+                  and un smile eppovume ippadiye irukkanum. 💗
                 </p>
 
                 <div className="emotional-letter-signature">
                   With all my heart,
                   <br />
-                  Someone who cares about you 💖
+                  Someone who cares about you more than words can say 💖
                 </div>
               </motion.div>
 
-              {/* MUSIC PLAYER */}
+
+              {/* 5.5 — Birthday song player */}
               <motion.div
                 className="birthday-music-card"
                 initial={{ opacity: 0, y: 50 }}
@@ -1098,7 +1088,8 @@ function App() {
                 </motion.button>
               </motion.div>
 
-              {/* COURTROOM GAME ENTRY */}
+              {/* 5.6 — Courtroom game entry */}
+
               <motion.div
                 className="advocate-challenge"
                 initial={{ opacity: 0, y: 60 }}
@@ -1113,26 +1104,48 @@ function App() {
 
                 <h2>
                   Welcome to the
-                  <span>Birthday Courtroom ⚖️</span>
+                  <span> Birthday Courtroom ⚖️</span>
                 </h2>
 
                 <div className="challenge-description">
                   <p>
-                    Advocate Madam, an extraordinary case has been filed
-                    against a very special person...
-                  </p>
-
-                  <p>The accused is charged with:</p>
-
-                  <p className="challenge-charge">
-                    Stealing Hearts, Spreading Smiles &amp; Being
-                    Irresistibly Cute! 💗
+                    Attention, Advocate Madam! 👩🏻‍⚖️💗
                   </p>
 
                   <p>
-                    Your mission is to investigate the evidence, uncover the
-                    truth, and deliver the most unforgettable Birthday
-                    Verdict! 🎂
+                    An extraordinary case has officially been filed
+                    in the Birthday Court against a very special person...
+                  </p>
+
+                  <p>
+                    The accused stands before the court, charged with
+                    the following adorable crimes:
+                  </p>
+
+                  <p className="challenge-charge">
+                    💗 Count 1: Stealing Hearts Without Permission!
+                    <br />
+                    ✨ Count 2: Spreading Smiles Everywhere!
+                    <br />
+                    🫶🏻 Count 3: Being Unbelievably Cute &amp; Irresistible!
+                    <br />
+                    🎂 Count 4: Making Someone's World a Little More Beautiful!
+                  </p>
+
+                  <p>
+                    The evidence has been carefully collected,
+                    the feelings are undeniable, and the case is
+                    officially ready for trial! 💌
+                  </p>
+
+                  <p>
+                    <strong>Your mission, Advocate Madam:</strong>
+                  </p>
+
+                  <p>
+                    Investigate the evidence, uncover the sweetest
+                    truths, and deliver a Birthday Verdict that will
+                    make this special day truly unforgettable! 🎂
                   </p>
                 </div>
 
@@ -1156,22 +1169,26 @@ function App() {
                   whileTap={{ scale: 0.96 }}
                 >
                   <Gavel size={18} />
-                  <span>ACCEPT THE CASE</span>
+                  <span>ACCEPT THE CASE 💗</span>
                   <ArrowLeft size={18} className="arrow-right" />
                 </motion.button>
               </motion.div>
 
-              {/* RAJINI vs VIJAY */}
-              <JudgeReveal onContinue={handleJudgeContinue} />
 
-              {/* SECRET CASE FILE (opens after the Judge button) */}
+              {/* 5.7 — Rajini vs Vijay (button opens the Secret Case File) */}
+              <JudgeReveal
+                onContinue={() => setShowFinalSections(true)}
+                theriAudioRef={theriAudioRef}
+              />
+
+              {/* 5.8 — Secret Case File */}
               {showFinalSections && (
                 <div id="college-secret-folder" className="final-sections">
                   <SecretCaseFile />
                 </div>
               )}
 
-              {/* FINAL MESSAGE */}
+              {/* 5.9 — Final message + replay */}
               <motion.div
                 className="final-love-message"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -1180,16 +1197,50 @@ function App() {
               >
                 <div className="final-love-hearts">💗 ✨ 💗</div>
 
-                <h2>
-                  You Will Always Be
-                  <span> Someone Special</span>
-                </h2>
+                <h2>⚖️ ONE LAST TIME…</h2>
+
+                <p>
+                  In every lifetime, my choice will always be you. ❤️
+                </p>
+
+                <h3>
+                  You are my love, my happiness, my forever. 🫶🏻
+                </h3>
+
+                <div className="verdict-sentence">
+                  <span>🎂 HAPPY BIRTHDAY, MY LOVE!</span>
+
+                  <p>
+                    Today, tomorrow, and forever…
+                    <br />
+                    I’ll always love you. 🫶🏻💌
+                  </p>
+                </div>
+
+                <h3>
+                  💗 You Will Always Be
+                  <span> Someone Special ✨</span>
+                </h3>
 
                 <p>
                   Happy Birthday once again!
                   <br />
-                  Keep smiling, keep shining, and keep being you. 💖
+                  Keep smiling, keep shining,
+                  <br />
+                  and keep being you. 💖
                 </p>
+
+                <h4>
+                  YOU ARE MY FOREVER.
+                  <br />
+                  MY LOVE. MY HAPPINESS. MY EVERYTHING. ❤️🔐
+                </h4>
+
+                <div className="final-love-hearts">
+                  Pets chelooo😘😘😘😘
+                  <br />
+                  <span>My cutest girl, my forever love. 😘❤️</span>
+                </div>
 
                 <button
                   type="button"
@@ -1205,42 +1256,17 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* PHOTO LIGHTBOX */}
+      {/* Popups */}
       <AnimatePresence>
         {selectedPhoto && (
-          <motion.div
-            className="photo-lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedPhoto(null)}
-          >
-            <motion.div
-              className="lightbox-card"
-              initial={{ scale: 0.5, rotateY: 90 }}
-              animate={{ scale: 1, rotateY: 0 }}
-              exit={{ scale: 0.5, rotateY: -90 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                className="lightbox-close"
-                onClick={() => setSelectedPhoto(null)}
-                aria-label="Close photo"
-              >
-                ✕
-              </button>
-
-              <img src={selectedPhoto.image} alt={selectedPhoto.title} />
-              <h2>{selectedPhoto.title}</h2>
-              <p>{selectedPhoto.description}</p>
-              <div className="lightbox-heart">💗</div>
-            </motion.div>
-          </motion.div>
+          <PhotoLightbox
+            key="photo-lightbox"
+            photo={selectedPhoto}
+            onClose={() => setSelectedPhoto(null)}
+          />
         )}
       </AnimatePresence>
 
-      {/* COURTROOM GAME */}
       <AnimatePresence>
         {courtOpen && <Courtroom onClose={() => setCourtOpen(false)} />}
       </AnimatePresence>

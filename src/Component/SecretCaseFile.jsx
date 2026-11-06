@@ -173,12 +173,12 @@ const SecretCaseFile = () => {
                                 🕵️ THE ADVOCATE'S SECRET CLUE
                             </div>
 
-                            <p>Three pieces of evidence are hidden in this case...</p>
+                            <p>Three hidden clues. One beautiful love story. ❤️</p>
 
                             <div className="hint-clues">
                                 <p>🎬 The movie that stole her heart.</p>
                                 <p>🌆 The city she loves the most.</p>
-                                <p>❤️ The day our beautiful story began.</p>
+                                <p>❤️ The date our beautiful story began.</p>
                             </div>
 
                             <h4>Put them together, Your Honor...</h4>

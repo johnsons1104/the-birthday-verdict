@@ -210,107 +210,142 @@ const Courtroom = ({ onClose }) => {
               )}
             </motion.div>
           ) : (
-            <motion.div
-              key="verdict"
-              className="courtroom-verdict"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            >
-              <motion.div
-                className="courtroom-verdict-stamp"
-                initial={{ scale: 3, rotate: -30, opacity: 0 }}
-                animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                transition={{ delay: 0.3, type: "spring" }}
-              >
-                APPROVED
-              </motion.div>
+          
+<motion.div
+  key="verdict"
+  className="courtroom-verdict"
+  initial={{ opacity: 0, scale: 0.5 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ type: "spring", stiffness: 100, damping: 12 }}
+>
+  <motion.div
+    className="courtroom-verdict-stamp"
+    initial={{ scale: 3, rotate: -30, opacity: 0 }}
+    animate={{ scale: 1, rotate: 0, opacity: 1 }}
+    transition={{ delay: 0.3, type: "spring" }}
+  >
+    APPROVED
+  </motion.div>
 
-              <motion.div
-                className="courtroom-verdict-icon"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                👩‍⚖️
-              </motion.div>
+  <motion.div
+    className="courtroom-verdict-icon"
+    animate={{ y: [0, -10, 0] }}
+    transition={{ duration: 2, repeat: Infinity }}
+  >
+    👩🏻‍⚖️
+  </motion.div>
 
-              <div className="courtroom-verdict-tag">
-                <Gavel size={16} />
-                FINAL JUDGMENT
-              </div>
+  <div className="courtroom-verdict-tag">
+    <Gavel size={16} />
+    THE FINAL JUDGMENT
+  </div>
 
-              <h2>
-                Case <span>Closed!</span>
-              </h2>
+  <h2>
+    Case <span>Closed!</span>
+  </h2>
 
-              <p>
-                The court has officially declared you the most special advocate
-                of all time.
-              </p>
+  <p>
+    After reviewing every smile, every beautiful moment,
+    and all the evidence presented before this court...
+  </p>
 
-              <motion.div
-                className="courtroom-verdict-card"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <Star size={28} fill="#ffd700" color="#ffd700" />
+  <p>
+    The court hereby declares you the most precious
+    advocate of my heart. 💗
+  </p>
 
-                <h3>VERDICT: FOREVER SPECIAL 💖</h3>
+  <motion.div
+    className="courtroom-verdict-card"
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.5 }}
+  >
+    <Star size={28} fill="#ffd700" color="#ffd700" />
 
-                <p>
-                  Your birthday is a reminder that the world became a little
-                  more beautiful because you were born.
-                </p>
+    <h3>
+      VERDICT: FOREVER SPECIAL 💖
+    </h3>
 
-                <div className="courtroom-verdict-footer">
-                  Signed by the Court of Love
-                  <br />
-                  Case No. 001/2026
-                </div>
-              </motion.div>
+    <p>
+      Found guilty of stealing my heart,
+      spreading endless smiles, and making my world
+      more beautiful simply by being you.
+    </p>
 
-              <div className="courtroom-answer-summary">
-                <h3>Your Court Decisions</h3>
+    <p>
+      <strong>
+        SENTENCE: A LIFETIME OF LOVE,
+        HAPPINESS &amp; BEAUTIFUL MEMORIES. 💌
+      </strong>
+    </p>
 
-                {answers.map((answer, index) => (
-                  <div className="courtroom-answer-item" key={index}>
-                    <CheckCircle size={16} />
-                    <span>
-                      Question {index + 1}: {answer.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
+    <div className="courtroom-verdict-footer">
+      Sealed with Love ❤️
+      <br />
+      The Court of Love
+      <br />
+      Case No. 001 / 2026
+    </div>
+  </motion.div>
 
-              <div className="courtroom-verdict-buttons">
-                <motion.button
-                  type="button"
-                  className="courtroom-replay-button"
-                  onClick={handleReplay}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Play size={17} />
-                  Play Again
-                </motion.button>
+  <div className="courtroom-answer-summary">
+    <h3>💌 Your Beautiful Court Decisions</h3>
 
-                <motion.button
-                  type="button"
-                  className="courtroom-finish-button"
-                  onClick={onClose}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Heart size={17} fill="currentColor" />
-                  Back to Birthday Surprise
-                </motion.button>
-              </div>
+    {answers.map((answer, index) => (
+      <div className="courtroom-answer-item" key={index}>
+        <CheckCircle size={16} />
+        <span>
+          Question {index + 1}: {answer.label}
+        </span>
+      </div>
+    ))}
+  </div>
 
-              <div className="courtroom-final-message">
-                Made with love, just for you 💗
-              </div>
-            </motion.div>
+  <div className="courtroom-final-message">
+    <p>
+      No further appeals are permitted...
+      <br />
+      Because this bond is already sentenced to FOREVER. 🫶🏻
+    </p>
+
+    <span>
+      Made with endless love, just for you 💗
+    </span>
+  </div>
+
+  <div className="courtroom-verdict-buttons">
+    <motion.button
+      type="button"
+      className="courtroom-replay-button"
+      onClick={handleReplay}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Play size={17} />
+      Play Again
+    </motion.button>
+
+    <motion.button
+      type="button"
+      className="courtroom-finish-button"
+      onClick={onClose}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Heart size={17} fill="currentColor" />
+      Back to Birthday Surprise
+    </motion.button>
+  </div>
+
+  <div className="courtroom-final-message">
+    <small>
+      🔐 CONFIDENTIAL LOVE CASE
+      <br />
+      © 2026 LOVE COURT
+    </small>
+  </div>
+</motion.div>
+
           )}
         </AnimatePresence>
 

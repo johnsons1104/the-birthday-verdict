@@ -1,7 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Caveat:wght@400;600;700&family=Kavivanar&display=swap");
 
 /* ==========================================
    BASE (Android + iPhone safe)
+   Same fonts + same pink/purple theme.
+   Only sizes, spacing, padding, margin and
+   image fitting are tuned for mobile.
 ========================================== */
 
 *,
@@ -49,6 +52,17 @@ input {
   font-size: 16px;
 }
 
+/* Long Tamil/English lines never push the page sideways */
+p,
+h1,
+h2,
+h3,
+h4,
+span,
+strong {
+  overflow-wrap: anywhere;
+}
+
 /* ==========================================
    PAGE + BACKGROUND
 ========================================== */
@@ -59,9 +73,9 @@ input {
   width: 100%;
   position: relative;
   overflow-x: hidden;
-  padding: clamp(24px, 6vw, 50px) clamp(12px, 4vw, 20px);
-  padding-top: max(clamp(24px, 6vw, 50px), env(safe-area-inset-top));
-  padding-bottom: max(clamp(24px, 6vw, 50px), env(safe-area-inset-bottom));
+  padding: clamp(20px, 5vw, 50px) clamp(12px, 4vw, 20px);
+  padding-top: max(clamp(20px, 5vw, 50px), env(safe-area-inset-top));
+  padding-bottom: max(clamp(28px, 6vw, 50px), env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,6 +114,7 @@ input {
   from {
     transform: translate(0, 0);
   }
+
   to {
     transform: translate(60px, 50px);
   }
@@ -143,9 +158,10 @@ input {
   border-radius: 50px;
   background: #ff4d8815;
   color: #ffb6d0;
-  font-size: clamp(9px, 2.8vw, 11px);
+  font-size: clamp(10px, 2.9vw, 12px);
   font-weight: 600;
   letter-spacing: clamp(1px, 0.4vw, 2px);
+  line-height: 1.5;
   text-align: center;
 }
 
@@ -164,21 +180,21 @@ input {
   width: 100%;
   max-width: 650px;
   text-align: center;
-  padding: clamp(8px, 3vw, 20px);
+  padding: clamp(6px, 3vw, 20px);
 }
 
 .main-heart {
-  font-size: clamp(56px, 16vw, 75px);
-  margin-bottom: 20px;
+  font-size: clamp(52px, 15vw, 78px);
+  margin-bottom: clamp(12px, 3vw, 20px);
   filter: drop-shadow(0 0 25px #ff4d88);
 }
 
 .question-container h1,
 .success-container h1 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(30px, 8.5vw, 60px);
+  font-size: clamp(30px, 8.6vw, 60px);
   line-height: 1.25;
-  margin: 22px 0;
+  margin: clamp(16px, 4vw, 24px) 0;
 }
 
 .question-container h1 span,
@@ -189,17 +205,17 @@ input {
 .question-description,
 .success-description {
   color: #cbbac5;
-  font-size: clamp(13px, 3.6vw, 14px);
-  line-height: 1.9;
-  margin-bottom: 28px;
+  font-size: clamp(14px, 3.9vw, 16px);
+  line-height: 1.85;
+  margin-bottom: clamp(22px, 5vw, 30px);
 }
 
 .question-card {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
-  padding: clamp(30px, 8vw, 40px) clamp(18px, 5vw, 25px);
+  padding: clamp(26px, 7vw, 40px) clamp(16px, 5vw, 26px);
   border-radius: 28px;
   background: linear-gradient(145deg, #25101f, #160b1a);
   border: 1px solid #ff7eb355;
@@ -211,15 +227,15 @@ input {
 
 .card-sparkle {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 16px;
+  right: 16px;
   color: #ffb6d0;
 }
 
 .question-card h2 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(32px, 10vw, 45px);
-  line-height: 1.3;
+  font-size: clamp(30px, 9.4vw, 46px);
+  line-height: 1.25;
 }
 
 .question-card h2 span {
@@ -227,14 +243,14 @@ input {
 }
 
 .emoji-row {
-  font-size: clamp(24px, 7vw, 30px);
-  margin: 18px 0;
+  font-size: clamp(24px, 7vw, 32px);
+  margin: clamp(12px, 3vw, 18px) 0;
 }
 
 .question-card p {
   color: #cbbac5;
-  line-height: 1.8;
-  font-size: clamp(13px, 3.6vw, 14px);
+  line-height: 1.75;
+  font-size: clamp(13.5px, 3.8vw, 15px);
 }
 
 .button-area {
@@ -243,8 +259,9 @@ input {
   align-items: center;
   justify-content: center;
   gap: clamp(14px, 4vw, 25px);
-  margin: 40px auto 25px;
-  min-height: 75px;
+  position: relative;
+  margin: clamp(30px, 8vw, 44px) auto clamp(14px, 4vw, 20px);
+  min-height: 120px;
 }
 
 .yes-button,
@@ -253,11 +270,11 @@ input {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 48px;
-  padding: 14px clamp(20px, 6vw, 28px);
+  min-height: 50px;
+  padding: 14px clamp(22px, 6vw, 30px);
   border: none;
   border-radius: 50px;
-  font-size: clamp(12px, 3.6vw, 14px);
+  font-size: clamp(13px, 3.8vw, 15px);
   font-weight: 600;
 }
 
@@ -278,9 +295,12 @@ input {
 }
 
 .no-message {
+  max-width: 340px;
+  min-height: 48px;
+  margin: 0 auto;
   color: #ffb6d0;
-  font-size: 13px;
-  min-height: 25px;
+  font-size: clamp(13px, 3.6vw, 14.5px);
+  font-weight: 600;
   line-height: 1.6;
 }
 
@@ -290,14 +310,14 @@ input {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 45px;
-  font-size: 12px;
+  margin-top: clamp(30px, 8vw, 45px);
+  font-size: clamp(11.5px, 3.2vw, 13px);
   color: #bca8b5;
 }
 
 .success-heart {
-  font-size: clamp(64px, 20vw, 90px);
-  margin-bottom: 20px;
+  font-size: clamp(60px, 19vw, 90px);
+  margin-bottom: clamp(14px, 3vw, 20px);
   filter: drop-shadow(0 0 35px #ff4d88);
 }
 
@@ -305,36 +325,36 @@ input {
 
 .courtroom-intro {
   text-align: center;
-  padding: 20px 4px;
+  padding: clamp(14px, 4vw, 20px) clamp(2px, 2vw, 8px);
   color: #ffffff;
   line-height: 1.8;
 }
 
 .courtroom-intro h2 {
   color: #ffb33c;
-  font-size: clamp(20px, 6vw, 24px);
+  font-size: clamp(20px, 5.8vw, 26px);
   line-height: 1.4;
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 4vw, 20px);
 }
 
 .courtroom-intro h3 {
   color: #ffb33c;
-  font-size: clamp(16px, 4.6vw, 18px);
+  font-size: clamp(16px, 4.6vw, 19px);
   line-height: 1.5;
-  margin: 18px 0;
+  margin: clamp(14px, 4vw, 20px) 0;
 }
 
 .courtroom-intro p {
-  font-size: clamp(13.5px, 3.8vw, 15px);
-  margin-bottom: 16px;
+  font-size: clamp(14px, 3.9vw, 16px);
+  margin-bottom: clamp(12px, 3.5vw, 16px);
 }
 
 .heart-theft-section {
   background: rgba(255, 77, 109, 0.12);
   border: 1px solid rgba(255, 77, 109, 0.4);
   border-radius: 16px;
-  padding: 18px 14px;
-  margin: 20px 0;
+  padding: clamp(14px, 4vw, 20px) clamp(12px, 3.5vw, 16px);
+  margin: clamp(16px, 4vw, 22px) 0;
 }
 
 .heart-theft-section h3 {
@@ -345,8 +365,8 @@ input {
   background: rgba(255, 179, 60, 0.1);
   border: 1px solid #ffb33c;
   border-radius: 16px;
-  padding: 18px 14px;
-  margin-top: 20px;
+  padding: clamp(14px, 4vw, 20px) clamp(12px, 3.5vw, 16px);
+  margin-top: clamp(16px, 4vw, 22px);
 }
 
 .courtroom-warning {
@@ -361,14 +381,15 @@ input {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 48px;
-  padding: 14px 24px;
-  margin-bottom: 30px;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 14px clamp(18px, 5vw, 26px);
+  margin-bottom: clamp(20px, 5vw, 30px);
   color: white;
   border: 1px solid #ff7eb355;
   background: linear-gradient(135deg, #ff4d8820, #c084fc20);
   border-radius: 50px;
-  font-size: 14px;
+  font-size: clamp(13px, 3.7vw, 15px);
   font-weight: 500;
 }
 
@@ -378,116 +399,22 @@ input {
   justify-content: center;
   gap: 12px;
   max-width: 100%;
-  min-height: 52px;
-  padding: 14px 24px;
+  min-height: 54px;
+  padding: 14px clamp(18px, 5vw, 26px);
   border: none;
   border-radius: 50px;
   background: linear-gradient(135deg, #ff4d88, #e91e63);
   color: white;
-  font-size: clamp(13px, 3.6vw, 15px);
+  font-size: clamp(13.5px, 3.8vw, 16px);
   font-weight: 600;
   box-shadow: 0 10px 30px #ff4d8840;
 }
 
 .final-footer {
-  font-size: 11px;
+  font-size: clamp(11px, 3vw, 12px);
   letter-spacing: 2px;
   color: #ffb6d0;
-  margin-top: 30px;
-}
-
-/* ==========================================
-   LOVE LETTER MODAL
-========================================== */
-
-.love-letter-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: max(16px, env(safe-area-inset-top)) 16px
-    max(16px, env(safe-area-inset-bottom));
-  background: rgba(5, 2, 12, 0.88);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.secret-letter-modal {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  max-height: 85vh;
-  max-height: 85dvh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  padding: 38px clamp(18px, 5vw, 28px) 30px;
-  background: linear-gradient(145deg, #1c1025, #100817);
-  border: 1px solid rgba(255, 77, 136, 0.5);
-  border-radius: 22px;
-  box-shadow:
-    0 0 40px rgba(255, 77, 136, 0.2),
-    0 0 80px rgba(192, 132, 252, 0.1);
-  color: white;
-  text-align: center;
-}
-
-.love-letter-close {
-  position: sticky;
-  top: 0;
-  float: right;
-  z-index: 3;
-  width: 40px;
-  height: 40px;
-  margin: -24px -6px 0 0;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 77, 136, 0.4);
-  background: #2a1233;
-  color: #ff8db8;
-  font-size: 18px;
-  transition: 0.3s;
-}
-
-.love-letter-close:hover {
-  background: #ff4d88;
-  color: white;
-}
-
-.secret-letter-modal .letter-emoji {
-  clear: both;
-  font-size: 45px;
-  margin-bottom: 14px;
-}
-
-.secret-letter-modal h2 {
-  color: #ff8db8;
-  font-size: clamp(20px, 5.8vw, 25px);
-  line-height: 1.4;
-  margin: 18px 0 22px;
-}
-
-.secret-letter-modal p {
-  color: #e7dce9;
-  font-size: clamp(13px, 3.6vw, 14px);
-  line-height: 1.9;
-  margin-bottom: 18px;
-}
-
-.secret-letter-modal h3 {
-  color: #ffd700;
-  margin-top: 24px;
-  font-size: clamp(15px, 4.4vw, 17px);
-  line-height: 1.5;
-}
-
-.secret-letter-modal .letter-signature {
-  margin-top: 25px;
-  color: #ff8db8;
-  line-height: 1.8;
-  font-style: italic;
-  text-align: center;
+  margin-top: clamp(24px, 6vw, 32px);
 }
 
 /* ==========================================
@@ -499,18 +426,18 @@ input {
   z-index: 2;
   width: 100%;
   max-width: 750px;
-  margin: clamp(40px, 10vw, 100px) auto;
-  padding: 30px clamp(4px, 2vw, 20px);
+  margin: clamp(16px, 6vw, 80px) auto;
+  padding: clamp(14px, 4vw, 30px) clamp(2px, 2vw, 20px);
   text-align: center;
   perspective: 1000px;
 }
 
 .password-card {
   position: relative;
-  max-width: 460px;
+  max-width: 480px;
   width: 100%;
   margin: auto;
-  padding: clamp(30px, 8vw, 45px) clamp(16px, 5vw, 30px);
+  padding: clamp(26px, 7vw, 45px) clamp(14px, 5vw, 30px);
   text-align: center;
   border-radius: 28px;
   background: linear-gradient(145deg, #2c1025, #13091a);
@@ -531,9 +458,9 @@ input {
 
 .password-card h2 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(22px, 7vw, 30px);
-  line-height: 1.4;
-  margin: 18px 0;
+  font-size: clamp(23px, 7vw, 32px);
+  line-height: 1.35;
+  margin: clamp(14px, 4vw, 20px) 0;
 }
 
 .password-card h2 span {
@@ -561,15 +488,16 @@ input {
   border-radius: 50px;
   background: #ffd70010;
   color: #ffd700;
-  font-size: clamp(9px, 2.7vw, 11px);
+  font-size: clamp(10px, 2.9vw, 11.5px);
   font-weight: 600;
   letter-spacing: 1px;
-  line-height: 1.4;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .case-icon {
-  font-size: clamp(54px, 16vw, 70px);
-  margin: 22px 0 8px;
+  font-size: clamp(52px, 15vw, 72px);
+  margin: clamp(16px, 4vw, 22px) 0 8px;
   filter: drop-shadow(0 0 25px #ff4d88);
 }
 
@@ -584,13 +512,13 @@ input {
 
 .case-number span {
   color: #ffb6d0;
-  font-size: 12px;
+  font-size: clamp(11px, 3.2vw, 13px);
   letter-spacing: 3px;
 }
 
 .case-number strong {
   font-family: "Playfair Display", serif;
-  font-size: clamp(22px, 7vw, 30px);
+  font-size: clamp(22px, 7vw, 32px);
   color: #ffd700;
   text-shadow: 0 0 20px #ffd70055;
 }
@@ -598,8 +526,8 @@ input {
 .case-description,
 .password-description {
   color: #d4b8ca;
-  font-size: clamp(12px, 3.4vw, 13px);
-  line-height: 1.8;
+  font-size: clamp(12.5px, 3.5vw, 14px);
+  line-height: 1.75;
   margin-bottom: 10px;
 }
 
@@ -610,14 +538,14 @@ input {
   flex-direction: column;
   gap: 14px;
   text-align: left;
-  padding: 18px;
-  margin: 22px 0;
+  padding: clamp(14px, 4vw, 18px);
+  margin: clamp(16px, 4vw, 22px) 0;
   border: 1px solid #ff7eb325;
   border-radius: 18px;
   background: #ffffff05;
 }
 
-.case-details > div,
+.case-details>div,
 .case-detail {
   display: flex;
   justify-content: space-between;
@@ -628,13 +556,13 @@ input {
 .case-details span {
   flex-shrink: 0;
   color: #a58b9c;
-  font-size: 10px;
+  font-size: clamp(10px, 2.9vw, 11px);
   letter-spacing: 1px;
 }
 
 .case-details strong {
   color: #ffb6d0;
-  font-size: 11.5px;
+  font-size: clamp(12px, 3.3vw, 13px);
   line-height: 1.5;
   text-align: right;
 }
@@ -642,7 +570,7 @@ input {
 /* Authorization */
 
 .authorization-section {
-  padding: 22px 14px;
+  padding: clamp(16px, 5vw, 22px) clamp(10px, 3.5vw, 14px);
   margin-top: 6px;
   border: 1px dashed #ffb33c66;
   border-radius: 18px;
@@ -651,15 +579,15 @@ input {
 
 .authorization-section h3 {
   color: #ffb33c;
-  font-size: clamp(12px, 3.5vw, 14px);
+  font-size: clamp(12.5px, 3.6vw, 15px);
   letter-spacing: 1px;
   line-height: 1.5;
   margin-bottom: 10px;
 }
 
-.authorization-section > p {
+.authorization-section>p {
   color: #d4b8ca;
-  font-size: 12.5px;
+  font-size: clamp(12.5px, 3.5vw, 14px);
   line-height: 1.7;
 }
 
@@ -677,13 +605,15 @@ input {
   flex-wrap: wrap;
   gap: 8px;
   color: #ffb6d0;
-  font-size: clamp(10px, 3vw, 11px);
+  font-size: clamp(10.5px, 3vw, 12px);
   letter-spacing: 1.5px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .love-password-input {
   width: 100%;
-  min-height: 52px;
+  min-height: 54px;
   padding: 15px 18px;
   border-radius: 15px;
   border: 1px solid #ff7eb355;
@@ -714,25 +644,25 @@ input {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  min-height: 52px;
+  min-height: 54px;
   padding: 14px 24px;
   border: none;
   border-radius: 50px;
   background: linear-gradient(135deg, #ff4d88, #e91e63);
   color: white;
-  font-size: 14px;
+  font-size: clamp(13.5px, 3.8vw, 15px);
   font-weight: 600;
   box-shadow: 0 10px 30px #ff4d8840;
 }
 
 .password-error {
   color: #ff8ba8;
-  font-size: 12.5px;
+  font-size: clamp(12.5px, 3.5vw, 14px);
   line-height: 1.6;
 }
 
 .password-hint {
-  font-size: 11.5px;
+  font-size: clamp(12px, 3.3vw, 13px);
   line-height: 1.8;
   color: #c49aaa;
   text-align: center;
@@ -745,13 +675,13 @@ input {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  min-height: 44px;
-  margin: 18px auto 0;
+  min-height: 46px;
+  margin: 16px auto 0;
   padding: 0 14px;
   border: none;
   background: transparent;
   color: #cbbac5;
-  font-size: 13px;
+  font-size: clamp(13px, 3.6vw, 14px);
 }
 
 /* ==========================================
@@ -759,21 +689,21 @@ input {
 ========================================== */
 
 .decrypt-heart {
-  font-size: clamp(64px, 20vw, 90px);
-  margin-bottom: 26px;
+  font-size: clamp(60px, 19vw, 90px);
+  margin-bottom: clamp(18px, 5vw, 26px);
   filter: drop-shadow(0 0 30px #ff4d88);
 }
 
 .decrypt-screen h2 {
-  font-size: clamp(22px, 7vw, 30px);
-  margin: 22px 0;
+  font-size: clamp(22px, 7vw, 32px);
+  margin: clamp(16px, 4vw, 22px) 0;
 }
 
 .decrypt-screen p {
-  font-size: 13px;
+  font-size: clamp(13px, 3.6vw, 14.5px);
   color: #d4b8ca;
-  line-height: 1.9;
-  margin-bottom: 28px;
+  line-height: 1.85;
+  margin-bottom: clamp(20px, 5vw, 28px);
 }
 
 .decrypt-progress {
@@ -794,20 +724,21 @@ input {
 
 .decrypt-percentage {
   color: #ffb6d0;
-  font-size: 20px;
+  font-size: clamp(20px, 5.6vw, 24px);
   font-weight: 700;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .decrypt-text {
   color: #ffb6d0;
-  font-size: clamp(9px, 2.8vw, 10px);
+  font-size: clamp(10px, 2.9vw, 11.5px);
   letter-spacing: 2px;
+  line-height: 1.6;
 }
 
 .decrypt-hearts {
-  font-size: 25px;
-  margin-top: 28px;
+  font-size: clamp(22px, 6vw, 26px);
+  margin-top: clamp(20px, 5vw, 28px);
 }
 
 /* ==========================================
@@ -816,10 +747,10 @@ input {
 
 .secret-reveal-card {
   position: relative;
-  max-width: 650px;
+  max-width: 660px;
   width: 100%;
   margin: auto;
-  padding: clamp(24px, 6vw, 35px) clamp(14px, 4vw, 25px);
+  padding: clamp(22px, 6vw, 36px) clamp(12px, 4vw, 26px);
   border-radius: 30px;
   background: linear-gradient(145deg, #28101f, #140a19);
   border: 1px solid #ff7eb355;
@@ -828,35 +759,35 @@ input {
 }
 
 .reveal-gavel {
-  font-size: clamp(54px, 16vw, 70px);
-  margin: 22px 0;
+  font-size: clamp(52px, 15vw, 72px);
+  margin: clamp(14px, 4vw, 22px) 0;
 }
 
-.secret-reveal-card > h2 {
+.secret-reveal-card>h2 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(26px, 7.5vw, 45px);
-  line-height: 1.4;
-  margin: 22px 0;
+  font-size: clamp(26px, 7.6vw, 45px);
+  line-height: 1.35;
+  margin: clamp(16px, 4vw, 22px) 0;
 }
 
-.secret-reveal-card > h2 span {
+.secret-reveal-card>h2 span {
   color: #ff7eb3;
 }
 
 .secret-love-message {
-  font-size: clamp(13px, 3.6vw, 14px);
+  font-size: clamp(13.5px, 3.8vw, 15px);
   color: #e4cbd8;
-  line-height: 2;
-  margin-bottom: 28px;
+  line-height: 1.95;
+  margin-bottom: clamp(22px, 5vw, 30px);
 }
 
 /* Special photo */
 
 .special-photo-card {
-  max-width: 450px;
+  max-width: 460px;
   width: 100%;
-  margin: 30px auto;
-  padding: 22px clamp(12px, 4vw, 20px);
+  margin: clamp(22px, 5vw, 30px) auto;
+  padding: clamp(16px, 5vw, 24px) clamp(12px, 4vw, 20px);
   border-radius: 28px;
   background: linear-gradient(145deg, #351325, #1b0b19);
   border: 1px solid #ffd70055;
@@ -872,16 +803,17 @@ input {
   flex-wrap: wrap;
   gap: 8px;
   color: #ffd700;
-  font-size: clamp(9px, 2.7vw, 10px);
+  font-size: clamp(10px, 2.9vw, 11.5px);
   letter-spacing: 1.5px;
-  margin-bottom: 22px;
+  line-height: 1.5;
+  margin-bottom: clamp(16px, 4vw, 22px);
 }
 
 .photo-glow {
   position: relative;
-  margin: 18px auto 26px;
+  margin: 16px auto clamp(18px, 5vw, 26px);
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
 }
 
 .secret-photo-frame {
@@ -893,13 +825,14 @@ input {
   box-shadow: 0 0 35px #ff4d8830;
 }
 
+/* Portrait photos: keep faces in frame */
 .secret-photo {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
   height: auto;
   object-fit: cover;
-  object-position: center;
+  object-position: center 22%;
   border-radius: 20px;
 }
 
@@ -908,35 +841,35 @@ input {
   left: 8px;
   right: 8px;
   bottom: 8px;
-  padding: 25px 10px 18px;
+  padding: 25px 10px 16px;
   border-radius: 0 0 20px 20px;
   background: linear-gradient(transparent, #000000b5);
   color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 11px;
+  font-size: clamp(10.5px, 3vw, 12px);
   letter-spacing: 2px;
 }
 
 .special-photo-card h3 {
   font-family: "Playfair Display", serif;
   color: #ffd700;
-  font-size: clamp(20px, 6vw, 24px);
-  margin: 18px 0;
+  font-size: clamp(20px, 6vw, 25px);
+  margin: clamp(14px, 4vw, 18px) 0;
 }
 
 .special-photo-card p {
   color: #e4cbd8;
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: clamp(13px, 3.6vw, 14.5px);
+  line-height: 1.85;
 }
 
 /* Photo gallery */
 
 .photo-gallery-section {
   width: 100%;
-  margin: 60px auto;
+  margin: clamp(36px, 9vw, 60px) auto;
 }
 
 .gallery-heading {
@@ -945,34 +878,34 @@ input {
   align-items: center;
   gap: 12px;
   color: #ffb6d0;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .gallery-heading h3 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(16px, 5vw, 22px);
+  font-size: clamp(16px, 5vw, 23px);
   letter-spacing: 1px;
 }
 
 .gallery-description {
   color: #cbbac5;
-  font-size: 13px;
-  line-height: 1.9;
-  margin-bottom: 30px;
+  font-size: clamp(13.5px, 3.7vw, 15px);
+  line-height: 1.85;
+  margin-bottom: clamp(20px, 5vw, 30px);
 }
 
 .individual-photo-gallery {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: clamp(22px, 6vw, 32px);
 }
 
 .individual-photo-card {
   position: relative;
   width: 100%;
-  max-width: 400px;
-  padding: 22px clamp(14px, 4vw, 20px);
+  max-width: 420px;
+  padding: clamp(16px, 5vw, 24px) clamp(12px, 4vw, 20px);
   border-radius: 26px;
   background: linear-gradient(145deg, #321326, #190b19);
   border: 1px solid #ff7eb355;
@@ -991,9 +924,9 @@ input {
 
 .individual-photo-label {
   color: #ffd700;
-  font-size: 10px;
+  font-size: clamp(10.5px, 3vw, 12px);
   letter-spacing: 2px;
-  margin-bottom: 18px;
+  margin-bottom: clamp(12px, 4vw, 18px);
 }
 
 .individual-image-wrapper {
@@ -1010,7 +943,7 @@ input {
   aspect-ratio: 4 / 5;
   height: auto;
   object-fit: cover;
-  object-position: center;
+  object-position: center 25%;
   transition: transform 0.6s ease;
 }
 
@@ -1038,14 +971,14 @@ input {
 .individual-photo-card h4 {
   font-family: "Playfair Display", serif;
   color: #ffb6d0;
-  font-size: clamp(19px, 5.6vw, 24px);
-  line-height: 1.4;
-  margin: 22px 0 12px;
+  font-size: clamp(19px, 5.6vw, 25px);
+  line-height: 1.35;
+  margin: clamp(16px, 4vw, 22px) 0 10px;
 }
 
 .individual-photo-card p {
   color: #cbbac5;
-  font-size: 13px;
+  font-size: clamp(13px, 3.6vw, 14.5px);
   line-height: 1.8;
 }
 
@@ -1054,9 +987,9 @@ input {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: clamp(16px, 4vw, 22px);
   color: #a58b9c;
-  font-size: 10px;
+  font-size: clamp(10.5px, 3vw, 11.5px);
   letter-spacing: 2px;
 }
 
@@ -1068,14 +1001,12 @@ input {
   position: relative;
   width: 100%;
   max-width: 850px;
-  margin: 40px auto;
-  padding: clamp(26px, 6vw, 40px) clamp(16px, 5vw, 35px);
+  margin: clamp(28px, 7vw, 40px) auto;
+  padding: clamp(22px, 6vw, 40px) clamp(14px, 5vw, 36px);
   text-align: center;
-  background: linear-gradient(
-    145deg,
-    rgba(35, 15, 35, 0.96),
-    rgba(15, 8, 22, 0.98)
-  );
+  background: linear-gradient(145deg,
+      rgba(35, 15, 35, 0.96),
+      rgba(15, 8, 22, 0.98));
   border: 1px solid rgba(255, 179, 60, 0.35);
   border-radius: 22px;
   box-shadow:
@@ -1088,25 +1019,25 @@ input {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at top,
-    rgba(255, 77, 136, 0.12),
-    transparent 60%
-  );
+  background: radial-gradient(circle at top,
+      rgba(255, 77, 136, 0.12),
+      transparent 60%);
   pointer-events: none;
 }
 
 .birthday-crown {
-  font-size: 35px;
-  margin-bottom: 12px;
+  font-size: clamp(32px, 9vw, 40px);
+  margin-bottom: 10px;
   animation: floatUp 3s ease-in-out infinite;
 }
 
 @keyframes floatUp {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -1118,15 +1049,15 @@ input {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   color: #ffb33c;
-  font-size: clamp(10px, 3vw, 12px);
+  font-size: clamp(10.5px, 3.1vw, 13px);
   font-weight: 700;
   letter-spacing: 2px;
 }
 
 .birthday-message-card h2 {
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 4vw, 20px);
   color: #ffffff;
   font-size: clamp(22px, 6.4vw, 36px);
   font-weight: 800;
@@ -1142,8 +1073,8 @@ input {
   max-width: 700px;
   margin: 12px auto;
   color: #d8d0dc;
-  font-size: clamp(13.5px, 3.8vw, 15px);
-  line-height: 1.9;
+  font-size: clamp(14px, 3.9vw, 16px);
+  line-height: 1.85;
 }
 
 .birthday-wishes {
@@ -1152,13 +1083,13 @@ input {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 26px 0;
+  margin: clamp(20px, 5vw, 26px) 0;
 }
 
 .birthday-wishes span {
   padding: 9px 15px;
   color: #ffb33c;
-  font-size: 12.5px;
+  font-size: clamp(12.5px, 3.5vw, 14px);
   font-weight: 600;
   background: rgba(255, 179, 60, 0.08);
   border: 1px solid rgba(255, 179, 60, 0.25);
@@ -1168,9 +1099,9 @@ input {
 .birthday-footer {
   margin-top: 22px;
   color: #ff80ab;
-  font-size: clamp(13px, 3.6vw, 14px);
+  font-size: clamp(13.5px, 3.8vw, 15px);
   font-weight: 600;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 /* ==========================================
@@ -1181,14 +1112,12 @@ input {
   position: relative;
   width: 100%;
   max-width: 850px;
-  margin: 40px auto;
-  padding: clamp(28px, 6vw, 45px) clamp(16px, 5vw, 40px);
+  margin: clamp(28px, 7vw, 40px) auto;
+  padding: clamp(24px, 6vw, 45px) clamp(14px, 5vw, 40px);
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    rgba(30, 12, 31, 0.98),
-    rgba(17, 8, 25, 0.98)
-  );
+  background: linear-gradient(135deg,
+      rgba(30, 12, 31, 0.98),
+      rgba(17, 8, 25, 0.98));
   border: 1px solid rgba(255, 77, 136, 0.35);
   border-radius: 22px;
   box-shadow:
@@ -1204,27 +1133,27 @@ input {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff4d88,
-    #ffb33c,
-    #ff4d88,
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      #ff4d88,
+      #ffb33c,
+      #ff4d88,
+      transparent);
 }
 
 .emotional-letter-icon {
-  font-size: 38px;
-  margin-bottom: 18px;
+  font-size: clamp(34px, 9.5vw, 42px);
+  margin-bottom: 16px;
   animation: letterFloat 3s ease-in-out infinite;
 }
 
 @keyframes letterFloat {
+
   0%,
   100% {
     transform: translateY(0) rotate(-5deg);
   }
+
   50% {
     transform: translateY(-8px) rotate(5deg);
   }
@@ -1236,34 +1165,35 @@ input {
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   color: #ff80ab;
-  font-size: clamp(10px, 3vw, 12px);
+  font-size: clamp(10.5px, 3.1vw, 13px);
   font-weight: 700;
   letter-spacing: clamp(1px, 0.4vw, 2px);
+  line-height: 1.5;
 }
 
 .emotional-letter-card h2 {
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 4vw, 24px);
   color: #ffffff;
   font-size: clamp(22px, 6.4vw, 34px);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .emotional-letter-card p {
   max-width: 700px;
-  margin: 16px auto;
+  margin: 14px auto;
   color: #dcd2df;
-  font-size: clamp(13.5px, 3.8vw, 15px);
-  line-height: 1.95;
+  font-size: clamp(14px, 3.9vw, 16px);
+  line-height: 1.9;
 }
 
 .emotional-letter-card .emotional-highlight {
-  margin-top: 26px;
+  margin-top: 24px;
   padding: clamp(14px, 4vw, 18px);
   color: #ffb33c;
-  font-size: clamp(14px, 4vw, 16px);
+  font-size: clamp(14.5px, 4vw, 17px);
   font-weight: 600;
   background: rgba(255, 179, 60, 0.06);
   border-left: 3px solid #ffb33c;
@@ -1271,12 +1201,12 @@ input {
 }
 
 .emotional-letter-signature {
-  margin-top: 32px;
-  padding-top: 24px;
+  margin-top: 28px;
+  padding-top: 22px;
   color: #ff80ab;
-  font-size: clamp(13.5px, 3.8vw, 15px);
+  font-size: clamp(14px, 3.9vw, 16px);
   font-weight: 600;
-  line-height: 1.8;
+  line-height: 1.75;
   border-top: 1px solid rgba(255, 77, 136, 0.2);
 }
 
@@ -1289,9 +1219,9 @@ input {
   align-items: center;
   gap: 14px;
   width: 100%;
-  max-width: 420px;
-  margin: 32px auto;
-  padding: 16px;
+  max-width: 440px;
+  margin: clamp(24px, 6vw, 32px) auto;
+  padding: clamp(14px, 4vw, 18px);
   text-align: left;
   border-radius: 20px;
   background: #ff4d8815;
@@ -1318,20 +1248,20 @@ input {
 .music-details h3 {
   margin-bottom: 5px;
   color: white;
-  font-size: clamp(12px, 3.6vw, 14px);
+  font-size: clamp(13px, 3.8vw, 15px);
   line-height: 1.4;
 }
 
 .music-details p {
   color: #ffb6d0;
-  font-size: clamp(10px, 3vw, 11px);
+  font-size: clamp(11px, 3.1vw, 12.5px);
   line-height: 1.5;
 }
 
 .music-control-button {
   flex-shrink: 0;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1349,9 +1279,9 @@ input {
 .advocate-challenge {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  margin: 40px auto;
-  padding: clamp(26px, 7vw, 36px) clamp(18px, 5vw, 28px);
+  max-width: 460px;
+  margin: clamp(28px, 7vw, 40px) auto;
+  padding: clamp(24px, 7vw, 38px) clamp(16px, 5vw, 30px);
   text-align: center;
   background:
     radial-gradient(circle at top, rgba(255, 193, 7, 0.12), transparent 50%),
@@ -1372,24 +1302,24 @@ input {
   gap: 8px;
   max-width: 100%;
   padding: 9px 16px;
-  margin-bottom: 22px;
+  margin-bottom: clamp(16px, 4vw, 22px);
   color: #ffd54f;
-  font-size: clamp(9px, 2.7vw, 10.5px);
+  font-size: clamp(10px, 2.9vw, 11.5px);
   font-weight: 800;
   letter-spacing: 1.6px;
-  line-height: 1.4;
+  line-height: 1.45;
   background: rgba(255, 193, 7, 0.08);
   border: 1px solid rgba(255, 193, 7, 0.35);
   border-radius: 50px;
 }
 
 .advocate-challenge h2 {
-  margin: 0 0 20px;
+  margin: 0 0 clamp(14px, 4vw, 20px);
   color: #fff1c2;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(24px, 7vw, 32px);
+  font-size: clamp(25px, 7.2vw, 33px);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 .advocate-challenge h2 span {
@@ -1398,15 +1328,15 @@ input {
 }
 
 .challenge-description {
-  max-width: 340px;
-  margin: 0 auto 22px;
+  max-width: 360px;
+  margin: 0 auto clamp(16px, 4vw, 22px);
 }
 
 .challenge-description p {
   margin: 0 0 14px;
   color: #cfc7b8;
-  font-size: clamp(13px, 3.6vw, 14px);
-  line-height: 1.8;
+  font-size: clamp(13.5px, 3.8vw, 15px);
+  line-height: 1.75;
 }
 
 .challenge-description .challenge-charge {
@@ -1424,7 +1354,7 @@ input {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 24px;
+  margin-bottom: clamp(18px, 5vw, 24px);
 }
 
 .challenge-meta span {
@@ -1433,7 +1363,7 @@ input {
   gap: 6px;
   padding: 8px 12px;
   color: #d8c9a0;
-  font-size: clamp(9px, 2.6vw, 10px);
+  font-size: clamp(10px, 2.8vw, 11px);
   font-weight: 700;
   letter-spacing: 0.8px;
   background: rgba(255, 193, 7, 0.06);
@@ -1443,14 +1373,14 @@ input {
 
 .courtroom-button {
   width: 100%;
-  min-height: 52px;
+  min-height: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   padding: 14px 18px;
   color: #17120a;
-  font-size: clamp(11px, 3.3vw, 12.5px);
+  font-size: clamp(12px, 3.5vw, 13.5px);
   font-weight: 900;
   letter-spacing: 1px;
   background: linear-gradient(135deg, #ffe082, #ffbd2e, #d9a323);
@@ -1471,15 +1401,15 @@ input {
 
 .final-sections {
   width: 100%;
-  margin: 40px auto 10px;
+  margin: clamp(28px, 7vw, 40px) auto 10px;
   overflow-x: hidden;
 }
 
 .final-love-message {
   width: 100%;
-  max-width: 450px;
-  margin: 45px auto 10px;
-  padding: clamp(26px, 6vw, 35px) clamp(16px, 5vw, 25px);
+  max-width: 470px;
+  margin: clamp(32px, 8vw, 45px) auto 10px;
+  padding: clamp(24px, 6vw, 36px) clamp(14px, 5vw, 26px);
   text-align: center;
   border-radius: 26px;
   background: linear-gradient(145deg, #321326, #190b19);
@@ -1488,15 +1418,16 @@ input {
 }
 
 .final-love-hearts {
-  font-size: 32px;
-  margin-bottom: 15px;
+  font-size: clamp(28px, 8vw, 34px);
+  margin-bottom: 14px;
+  line-height: 1.6;
 }
 
 .final-love-message h2 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(22px, 6.6vw, 28px);
-  line-height: 1.4;
-  margin-bottom: 15px;
+  font-size: clamp(22px, 6.6vw, 30px);
+  line-height: 1.35;
+  margin-bottom: 14px;
 }
 
 .final-love-message h2 span {
@@ -1505,10 +1436,10 @@ input {
 }
 
 .final-love-message p {
-  margin-bottom: 25px;
+  margin-bottom: clamp(18px, 5vw, 25px);
   color: #e4cbd8;
-  font-size: 14px;
-  line-height: 1.9;
+  font-size: clamp(14px, 3.9vw, 15.5px);
+  line-height: 1.85;
 }
 
 .reset-surprise-button {
@@ -1516,13 +1447,13 @@ input {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  min-height: 46px;
-  padding: 12px 24px;
+  min-height: 48px;
+  padding: 12px 26px;
   border-radius: 50px;
   background: transparent;
   color: #ffb6d0;
   border: 1px solid #ff7eb355;
-  font-size: 13.5px;
+  font-size: clamp(13.5px, 3.7vw, 15px);
 }
 
 /* ==========================================
@@ -1536,8 +1467,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: max(16px, env(safe-area-inset-top)) 16px
-    max(16px, env(safe-area-inset-bottom));
+  padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
   background: #000000e8;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -1545,13 +1475,13 @@ input {
 
 .lightbox-card {
   position: relative;
-  max-width: 500px;
+  max-width: 520px;
   width: 100%;
   max-height: 92vh;
   max-height: 92dvh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 22px clamp(16px, 4vw, 25px);
+  padding: 20px clamp(14px, 4vw, 26px) 24px;
   border-radius: 26px;
   background: linear-gradient(145deg, #321326, #190b19);
   border: 1px solid #ff7eb355;
@@ -1561,15 +1491,16 @@ input {
 
 .lightbox-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   z-index: 5;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1px solid #ff7eb355;
   background: #190b19;
   color: white;
+  font-size: 16px;
 }
 
 .lightbox-card img {
@@ -1579,26 +1510,26 @@ input {
   max-height: 55dvh;
   object-fit: contain;
   border-radius: 20px;
-  margin: 28px 0 22px;
+  margin: 30px 0 20px;
 }
 
 .lightbox-card h2 {
   font-family: "Playfair Display", serif;
   color: #ffb6d0;
-  font-size: clamp(19px, 5.6vw, 26px);
-  line-height: 1.4;
-  margin-bottom: 14px;
+  font-size: clamp(19px, 5.6vw, 27px);
+  line-height: 1.35;
+  margin-bottom: 12px;
 }
 
 .lightbox-card p {
   color: #cbbac5;
-  font-size: 13px;
+  font-size: clamp(13px, 3.6vw, 14.5px);
   line-height: 1.8;
 }
 
 .lightbox-heart {
   font-size: 32px;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 /* ==========================================
@@ -1611,7 +1542,68 @@ input {
   }
 
   .case-details strong {
-    font-size: 12px;
+    font-size: 13px;
+  }
+
+  .question-description,
+  .success-description {
+    font-size: 16px;
+  }
+}
+
+/* ==========================================
+   PHONES (up to 480px)
+========================================== */
+
+@media (max-width: 480px) {
+
+  .secret-reveal-card,
+  .individual-photo-card,
+  .question-card,
+  .password-card,
+  .special-photo-card {
+    border-radius: 22px;
+  }
+
+  .birthday-message-card,
+  .emotional-letter-card,
+  .advocate-challenge,
+  .final-love-message,
+  .lightbox-card {
+    border-radius: 20px;
+  }
+
+  .individual-image-wrapper,
+  .secret-photo {
+    border-radius: 16px;
+  }
+
+  .secret-photo-frame {
+    border-radius: 20px;
+    padding: 6px;
+  }
+
+  .photo-overlay {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .case-details>div,
+  .case-detail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .case-details strong {
+    text-align: left;
+  }
+
+  .letter-button,
+  .secret-open-button {
+    width: 100%;
   }
 }
 
@@ -1630,20 +1622,12 @@ input {
     max-width: 260px;
   }
 
-  .case-details > div,
-  .case-detail {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-
-  .case-details strong {
-    text-align: left;
-  }
-
-
   .authorization-section {
-    padding: 18px 10px;
+    padding: 16px 10px;
+  }
+
+  .birthday-wishes span {
+    width: 100%;
   }
 }
 
@@ -1652,7 +1636,6 @@ input {
 ========================================== */
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .secret-letter-modal,
   .lightbox-card {
     max-height: 94vh;
     max-height: 94dvh;
@@ -1669,6 +1652,7 @@ input {
 ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
+
   .birthday-crown,
   .emotional-letter-icon,
   .glow-one,
