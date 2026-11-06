@@ -1,0 +1,261 @@
+.judge-reveal {
+  width: 100%;
+  max-width: 720px;
+  margin: 50px auto;
+  padding: 35px 22px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  text-align: center;
+  background: linear-gradient(
+    145deg,
+    #170d20,
+    #24102d,
+    #100d1b
+  );
+  border: 1px solid rgba(255, 77, 136, 0.35);
+  box-shadow:
+    0 0 35px rgba(255, 77, 136, 0.12),
+    inset 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+.judge-tag,
+.vijay-verdict-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  color: #ffc94d;
+  background: rgba(255, 201, 77, 0.08);
+  border: 1px solid rgba(255, 201, 77, 0.3);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.judge-main-icon {
+  font-size: 65px;
+  margin: 25px 0 15px;
+  animation: judgePulse 2s infinite;
+}
+
+.judge-reveal h1 {
+  color: #ffffff;
+  font-size: clamp(26px, 5vw, 42px);
+  line-height: 1.35;
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.judge-reveal h1 span {
+  color: #ffb33c;
+  text-shadow: 0 0 20px rgba(255, 179, 60, 0.3);
+}
+
+.judge-description {
+  color: #d9cddd;
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 20px 0;
+}
+
+.judge-description strong {
+  color: #ff80ad;
+}
+
+/* Button area */
+
+.judge-choice-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  min-height: 130px;
+  margin: 25px auto;
+  max-width: 500px;
+}
+
+.rajini-choice-btn,
+.vijay-choice-btn {
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  border: none;
+  min-width: 155px;
+  transition: box-shadow 0.3s ease;
+}
+
+.rajini-choice-btn {
+  color: white;
+  background: linear-gradient(135deg, #686868, #333333);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.vijay-choice-btn {
+  color: #1a0c05;
+  background: linear-gradient(135deg, #ffd700, #ff7b00);
+  box-shadow: 0 0 25px rgba(255, 179, 60, 0.35);
+  z-index: 3;
+}
+
+.vijay-choice-btn:hover {
+  box-shadow: 0 0 35px rgba(255, 179, 60, 0.7);
+}
+
+.rajini-funny-message {
+  min-height: 30px;
+  color: #ff8ab7;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 15px 0;
+}
+
+.judge-bottom-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #cbbad2;
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+/* Vijay reveal */
+
+.vijay-verdict-screen {
+  width: 100%;
+}
+
+.vijay-verdict-tag {
+  color: #ffd700;
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.vijay-image-frame {
+  max-width: 390px;
+  margin: 30px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 2px solid #ffb33c;
+  box-shadow:
+    0 0 30px rgba(255, 179, 60, 0.25),
+    0 0 60px rgba(255, 77, 136, 0.12);
+}
+
+.vijay-reveal-image {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  display: block;
+  object-position: center top;
+}
+
+.vijay-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #ffd700;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  background: linear-gradient(
+    transparent,
+    rgba(0, 0, 0, 0.95)
+  );
+}
+
+.vijay-verdict-message {
+  color: #e6d8eb;
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 20px 0;
+}
+
+.vijay-verdict-message strong {
+  color: #ffb33c;
+}
+
+.vijay-love-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #ffd700;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin: 25px 0;
+}
+
+.judge-continue-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 25px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff4d88, #c026d3);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 77, 136, 0.3);
+}
+
+@keyframes judgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 480px) {
+  .judge-reveal {
+    padding: 25px 15px;
+    margin: 30px auto;
+  }
+
+  .judge-choice-area {
+    gap: 15px;
+    min-height: 150px;
+  }
+
+  .rajini-choice-btn,
+  .vijay-choice-btn {
+    min-width: 140px;
+    padding: 13px 17px;
+    font-size: 14px;
+  }
+
+  .vijay-reveal-image {
+    height: 380px;
+  }
+
+  .judge-tag,
+  .vijay-verdict-tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+}

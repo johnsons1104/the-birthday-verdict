@@ -1,0 +1,381 @@
+.college-memory-section {
+  padding: 90px 20px;
+  background:
+    radial-gradient(circle at top, #35152c, transparent 45%),
+    linear-gradient(135deg, #090711, #180d20, #0b0812);
+  color: #fff;
+  overflow: hidden;
+}
+
+.college-memory-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.college-memory-heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.college-memory-tag {
+  display: inline-block;
+  padding: 8px 18px;
+  border: 1px solid rgba(255, 105, 180, 0.4);
+  border-radius: 30px;
+  color: #ff91c8;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.college-memory-heading h2 {
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.college-memory-heading h2 span {
+  color: #ff79b8;
+}
+
+.college-memory-heading p {
+  color: #c7b9cb;
+  line-height: 1.8;
+}
+
+.secret-folder-card,
+.college-password-card {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 121, 184, 0.25);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px rgba(255, 80, 160, 0.08);
+}
+
+.folder-icon {
+  font-size: 75px;
+  margin-bottom: 20px;
+  animation: folderFloat 3s ease-in-out infinite;
+}
+
+.lock-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.secret-folder-card h3,
+.college-password-card h3 {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.secret-folder-card p,
+.college-password-card p {
+  color: #c9b8ce;
+  line-height: 1.7;
+}
+
+.open-secret-folder-btn,
+.unlock-folder-btn {
+  border: none;
+  border-radius: 30px;
+  padding: 14px 28px;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff5eaa, #a855f7);
+  box-shadow: 0 8px 25px rgba(255, 94, 170, 0.25);
+  transition: 0.3s ease;
+}
+
+.open-secret-folder-btn:hover,
+.unlock-folder-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 94, 170, 0.4);
+}
+
+.college-password-card form {
+  margin-top: 25px;
+}
+
+.college-password-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 121, 184, 0.4);
+  background: #100b18;
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
+
+.college-password-card input:focus {
+  border-color: #ff79b8;
+  box-shadow: 0 0 15px rgba(255, 121, 184, 0.15);
+}
+
+.college-password-error {
+  color: #ff7b91 !important;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.close-folder-btn {
+  display: block;
+  margin: 20px auto 0;
+  background: transparent;
+  border: none;
+  color: #c7b9cb;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.college-gallery-wrapper {
+  animation: galleryReveal 0.7s ease;
+}
+
+.college-gallery-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 35px;
+  flex-wrap: wrap;
+}
+
+.unlocked-label {
+  display: inline-block;
+  color: #85ffc4;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.college-gallery-top h3 {
+  font-size: clamp(24px, 4vw, 35px);
+  margin: 0 0 10px;
+}
+
+.college-gallery-top p {
+  color: #c7b9cb;
+}
+
+.lock-folder-again-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ff91c8;
+  border: 1px solid rgba(255, 121, 184, 0.3);
+  border-radius: 25px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.college-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.college-photo-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 121, 184, 0.15);
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.college-photo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(255, 80, 160, 0.15);
+}
+
+.college-photo-image {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  background: #21152b;
+}
+
+.college-photo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.college-photo-card:hover .college-photo-image img {
+  transform: scale(1.08);
+}
+
+.college-photo-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 5, 20, 0.35);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.college-photo-card:hover .college-photo-overlay {
+  opacity: 1;
+}
+
+.college-photo-overlay span {
+  background: rgba(255, 105, 180, 0.9);
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 13px;
+}
+
+.college-photo-details {
+  padding: 18px;
+}
+
+.college-photo-details h4 {
+  color: #ff9dcc;
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.college-photo-details p {
+  color: #c9b8ce;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.college-memory-footer {
+  text-align: center;
+  margin-top: 45px;
+  color: #ff91c8;
+}
+
+.college-memory-footer p {
+  color: #c7b9cb;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.college-photo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.college-modal-content {
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  animation: galleryReveal 0.3s ease;
+}
+
+.college-modal-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgba(255, 105, 180, 0.2);
+}
+
+.college-modal-content h3 {
+  color: #ff91c8;
+  margin-top: 20px;
+}
+
+.college-modal-content p {
+  color: #ddd;
+  line-height: 1.7;
+}
+
+.college-modal-close {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+@keyframes folderFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes galleryReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .college-memory-section {
+    padding: 60px 15px;
+  }
+
+  .college-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .college-photo-image {
+    height: 210px;
+  }
+
+  .college-photo-details {
+    padding: 13px;
+  }
+
+  .college-photo-details h4 {
+    font-size: 15px;
+  }
+
+  .college-photo-details p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .college-photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .college-photo-image {
+    height: 280px;
+  }
+
+  .secret-folder-card,
+  .college-password-card {
+    padding: 30px 20px;
+  }
+
+  .college-gallery-top {
+    align-items: flex-start;
+  }
+}

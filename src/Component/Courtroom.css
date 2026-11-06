@@ -1,0 +1,453 @@
+/* ==========================================
+   COURTROOM GAME POPUP
+   (The entry card now lives in App.css as .advocate-challenge)
+========================================== */
+
+.courtroom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: max(14px, env(safe-area-inset-top)) 12px
+    max(14px, env(safe-area-inset-bottom));
+  background: rgba(5, 6, 8, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* margin:auto centers the card, and still lets tall content scroll */
+.courtroom-game-container {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: auto;
+  padding: clamp(20px, 5vw, 38px) clamp(14px, 4vw, 36px);
+  color: #f4e8c2;
+  text-align: center;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 24px;
+  background: radial-gradient(
+    ellipse at top,
+    #292313 0%,
+    #111216 48%,
+    #08090c 100%
+  );
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.65);
+}
+
+/* HEADER */
+
+.courtroom-game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.courtroom-game-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: #d4af37;
+}
+
+.courtroom-game-brand svg {
+  flex-shrink: 0;
+}
+
+.courtroom-game-brand span {
+  display: block;
+  font-size: clamp(8px, 2.4vw, 9px);
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.courtroom-game-brand h2 {
+  margin-top: 4px;
+  color: #fff0bd;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(18px, 5vw, 24px);
+  line-height: 1.3;
+}
+
+.courtroom-close-button {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e7d6a3;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.courtroom-case-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 10px;
+  padding: 7px 14px;
+  color: #d4af37;
+  font-size: clamp(10px, 2.8vw, 11px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 30px;
+}
+
+/* QUESTIONS */
+
+.courtroom-question-area {
+  padding: 8px 0;
+}
+
+.courtroom-progress {
+  margin-bottom: 14px;
+  color: #bdb39b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.courtroom-progress-track {
+  width: 100%;
+  height: 7px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.courtroom-progress-fill {
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #c89a28, #f8e6a0);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+.courtroom-gavel-icon {
+  margin: 14px 0 8px;
+  font-size: clamp(46px, 14vw, 58px);
+  filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.35));
+}
+
+.courtroom-question-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #d4af37;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.courtroom-question-area h2 {
+  color: #fff0bd;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(21px, 6vw, 30px);
+  line-height: 1.35;
+}
+
+.courtroom-question-subtitle {
+  margin: 10px 0 22px;
+  color: #bdb39b;
+  font-size: clamp(12.5px, 3.5vw, 13.5px);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.courtroom-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.courtroom-option-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 14px;
+  color: #e8dfc9;
+  font-size: clamp(13px, 3.6vw, 14.5px);
+  font-weight: 600;
+  text-align: left;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.06);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+@media (hover: hover) {
+  .courtroom-option-button:hover {
+    border-color: #d4af37;
+    background: rgba(212, 175, 55, 0.14);
+  }
+}
+
+.courtroom-option-number {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #17130a;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8e6a0, #c89a28);
+}
+
+.courtroom-option-emoji {
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.courtroom-option-text {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+.courtroom-option-arrow {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #d4af37;
+  transform: rotate(180deg);
+}
+
+.courtroom-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 20px;
+  padding: 10px 18px;
+  color: #cbbf9c;
+  font-size: 12.5px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 30px;
+  background: transparent;
+}
+
+/* VERDICT */
+
+.courtroom-verdict {
+  padding: 8px 0;
+}
+
+.courtroom-verdict-stamp {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 8px 18px;
+  color: #4ade80;
+  font-size: clamp(16px, 5vw, 20px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  border: 3px solid #4ade80;
+  border-radius: 8px;
+  transform: rotate(-4deg);
+}
+
+.courtroom-verdict-icon {
+  margin: 10px 0;
+  font-size: clamp(50px, 16vw, 64px);
+}
+
+.courtroom-verdict-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d4af37;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.courtroom-verdict h2 {
+  margin: 12px 0;
+  color: #fff0bd;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(28px, 8vw, 42px);
+}
+
+.courtroom-verdict h2 span {
+  color: #ffb33c;
+}
+
+.courtroom-verdict > p {
+  margin-bottom: 20px;
+  color: #c6c0b0;
+  font-size: clamp(13px, 3.6vw, 14px);
+  line-height: 1.8;
+}
+
+.courtroom-verdict-card {
+  margin: 20px 0;
+  padding: 24px clamp(14px, 4vw, 20px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1a1915, #111216);
+}
+
+.courtroom-verdict-card h3 {
+  margin: 12px 0;
+  color: #f7e6b2;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(17px, 5vw, 24px);
+  line-height: 1.4;
+}
+
+.courtroom-verdict-card p {
+  color: #c6c0b0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.courtroom-verdict-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  color: #d4af37;
+  font-size: 11px;
+  line-height: 1.8;
+  letter-spacing: 1px;
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.courtroom-answer-summary {
+  margin: 20px 0;
+  padding: 18px 14px;
+  text-align: left;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.courtroom-answer-summary h3 {
+  margin-bottom: 12px;
+  color: #f7e6b2;
+  font-size: 14px;
+  text-align: center;
+}
+
+.courtroom-answer-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  color: #d5cbb5;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.courtroom-answer-item svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #d4af37;
+}
+
+.courtroom-verdict-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.courtroom-replay-button,
+.courtroom-finish-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 50px;
+}
+
+.courtroom-replay-button {
+  color: #e5d6a5;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.courtroom-finish-button {
+  color: #17130a;
+  border: 1px solid #f4d36a;
+  background: linear-gradient(135deg, #f8e6a0, #c89a28);
+}
+
+.courtroom-final-message {
+  margin-top: 22px;
+  color: #ffb6d0;
+  font-size: 12px;
+}
+
+/* FOOTER */
+
+.courtroom-game-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 26px;
+  color: #8f8468;
+  font-size: 9px;
+  letter-spacing: 1.4px;
+}
+
+.courtroom-game-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .courtroom-overlay {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .courtroom-game-container {
+    border-radius: 18px;
+  }
+
+  .courtroom-verdict-buttons {
+    flex-direction: column;
+  }
+
+  .courtroom-replay-button,
+  .courtroom-finish-button {
+    width: 100%;
+  }
+
+  .courtroom-game-footer {
+    justify-content: center;
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .courtroom-gavel-icon {
+    display: none;
+  }
+}
